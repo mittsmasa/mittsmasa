@@ -1,0 +1,23 @@
+[core]
+        filemode = false
+        editor = vim
+        excludefile = ~/.gitignore_global
+        ignorecase = false
+[user]
+        email = light62motion@gmail.com
+        name = mittsmasa
+[merge]
+        tool = vimdiff
+[alias]
+        st = status
+        co = checkout
+        cob = checkout -b
+        br = branch
+        up = rebase
+        ci = commit
+	f  = fetch --prune
+        ap = add -p
+        diffc = diff --cached
+        graph = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --all --date=short
+[color]
+        ui = auto
