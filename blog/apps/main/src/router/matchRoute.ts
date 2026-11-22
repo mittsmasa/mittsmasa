@@ -2,7 +2,7 @@ export type RouteParams = Record<string, string | undefined>;
 
 export type RouteMatch<R> = {
   route: R;
-  /** パターンの `:name` に当たった値 */
+  /** パターンの `:name` に当たった値。パーセントエンコードはデコードしてある */
   params: RouteParams;
 };
 
@@ -12,11 +12,29 @@ function normalizePath(path: string): string {
 }
 
 /**
+ * URLPattern の groups はパーセントエンコードされたまま返るので、デコードする。
+ *
+ * @returns デコードできない値（壊れたパーセントエンコード）があれば `undefined`
+ */
+function decodeParams(groups: RouteParams): RouteParams | undefined {
+  try {
+    return Object.fromEntries(
+      Object.entries(groups).map(([name, value]) => [
+        name,
+        value === undefined ? undefined : decodeURIComponent(value),
+      ]),
+    );
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * パスに当たる最初のルートを返す。
  *
  * @param routes `pattern` は URLPattern の pathname の書き方（`/posts/:slug` など）
- * @param path URL の pathname。末尾の `/` の有無は区別しない
- * @returns 当たるルートが無ければ `undefined`
+ * @param path URL の pathname。末尾の `/` の有無は区別しない。エンコードの有無も区別しない
+ * @returns 当たるルートが無ければ `undefined`。パーセントエンコードが壊れたパスも、当たらないものとして扱う
  */
 export function matchRoute<R extends { pattern: string }>(
   routes: readonly R[],
@@ -26,7 +44,8 @@ export function matchRoute<R extends { pattern: string }>(
   for (const route of routes) {
     const result = new URLPattern({ pathname: route.pattern }).exec({ pathname });
     if (result) {
-      return { route, params: result.pathname.groups };
+      const params = decodeParams(result.pathname.groups);
+      return params && { route, params };
     }
   }
   return undefined;

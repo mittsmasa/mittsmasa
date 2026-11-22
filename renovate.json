@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
+  "minimumReleaseAge": "7 days",
+  "platformAutomerge": false,
+  "packageRules": [
+    {
+      "description": "major 以外は CI が通れば自動マージする",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "description": "Vite+ は blog/pnpm-workspace.yaml の overrides を vp toolchain の出力に手で合わせる必要があるため、まとめて手動マージにする",
+      "matchPackageNames": ["vite-plus", "@voidzero-dev/**", "vite", "vitest"],
+      "groupName": "vite-plus",
+      "automerge": false
+    }
+  ]
+}

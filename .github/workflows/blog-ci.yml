@@ -1,0 +1,41 @@
+name: blog CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "blog/**"
+      - ".github/workflows/blog-ci.yml"
+  # main の必須チェックなので、PR では paths で絞らず常に走らせる
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: blog-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: blog
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: voidzero-dev/setup-vp@cab1ab9eaff52d4857875f4f2c016e36af8f2c76 # v1.22.0
+        with:
+          working-directory: blog
+          cache: true
+          run-install: |
+            args: ["--frozen-lockfile"]
+      - name: Format, lint, type-check
+        run: vp check
+      - name: Test
+        run: vp test
+      - name: Build
+        run: vp run -r build

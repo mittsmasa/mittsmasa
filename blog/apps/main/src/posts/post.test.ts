@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { toPost } from "./post.ts";
+import { toPost, toPosts } from "./post.ts";
 
 describe("toPost", () => {
   test("frontmatter の title と date を持ち、本文を HTML に変換した記事を作る", () => {
@@ -29,5 +29,25 @@ describe("toPost", () => {
     const source = "---\ntitle: Hello\ndate: 2026/11/22\n---\n本文\n";
 
     expect(() => toPost("bad-date", source)).toThrow("bad-date: frontmatter の date");
+  });
+});
+
+describe("toPosts", () => {
+  const source = (date: string) => `---\ntitle: Hello\ndate: ${date}\n---\n本文\n`;
+
+  test("ファイル名から拡張子を除いたものを slug にする", () => {
+    const posts = toPosts({ "../content/posts/hello-world.md": source("2026-11-22") });
+
+    expect(posts.map((post) => post.slug)).toEqual(["hello-world"]);
+  });
+
+  test("date の新しい順に並べる", () => {
+    const posts = toPosts({
+      "posts/older.md": source("2026-11-01"),
+      "posts/newest.md": source("2026-11-22"),
+      "posts/middle.md": source("2026-11-10"),
+    });
+
+    expect(posts.map((post) => post.slug)).toEqual(["newest", "middle", "older"]);
   });
 });
