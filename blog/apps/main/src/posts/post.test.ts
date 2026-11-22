@@ -1,40 +1,34 @@
 import { describe, expect, test } from "vite-plus/test";
-import { toPost, toPosts } from "./post.ts";
+import { toPostFrontmatter, toPosts } from "./post.ts";
 
-describe("toPost", () => {
-  test("frontmatter の title と date を持ち、本文を HTML に変換した記事を作る", () => {
-    const source = "---\ntitle: Hello, world\ndate: 2026-11-22\n---\n\n最初の**記事**です。\n";
-
-    expect(toPost("hello-world", source)).toEqual({
-      slug: "hello-world",
-      title: "Hello, world",
-      date: "2026-11-22",
-      excerpt: "最初の記事です。",
-      html: "<p>最初の<strong>記事</strong>です。</p>\n",
-    });
+describe("toPostFrontmatter", () => {
+  test("title と date を取り出す", () => {
+    expect(
+      toPostFrontmatter("hello-world", { title: "Hello, world", date: "2026-11-22", tag: "x" }),
+    ).toEqual({ title: "Hello, world", date: "2026-11-22" });
   });
 
   test("title が無ければ、どの記事かわかるエラーにする", () => {
-    const source = "---\ndate: 2026-11-22\n---\n本文\n";
-
-    expect(() => toPost("no-title", source)).toThrow("no-title: frontmatter に title がありません");
+    expect(() => toPostFrontmatter("no-title", { date: "2026-11-22" })).toThrow(
+      "no-title: frontmatter に title がありません",
+    );
   });
 
   test("date が無ければエラーにする", () => {
-    const source = "---\ntitle: Hello\n---\n本文\n";
-
-    expect(() => toPost("no-date", source)).toThrow("no-date: frontmatter の date");
+    expect(() => toPostFrontmatter("no-date", { title: "Hello" })).toThrow(
+      "no-date: frontmatter の date",
+    );
   });
 
   test("date が YYYY-MM-DD でなければエラーにする", () => {
-    const source = "---\ntitle: Hello\ndate: 2026/11/22\n---\n本文\n";
-
-    expect(() => toPost("bad-date", source)).toThrow("bad-date: frontmatter の date");
+    expect(() => toPostFrontmatter("bad-date", { title: "Hello", date: "2026/11/22" })).toThrow(
+      "bad-date: frontmatter の date",
+    );
   });
 });
 
 describe("toPosts", () => {
-  const source = (date: string) => `---\ntitle: Hello\ndate: ${date}\n---\n本文\n`;
+  const source = (date: string) => ({ title: "Hello", date, excerpt: "" });
 
   test("ファイル名から拡張子を除いたものを slug にする", () => {
     const posts = toPosts({ "../content/posts/hello-world.md": source("2026-11-22") });

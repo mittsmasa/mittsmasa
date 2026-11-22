@@ -22,4 +22,12 @@ describe("SiteHeader", () => {
 
     expect(html).not.toContain("一覧");
   });
+
+  test("loading の間だけ、status に「読み込み中…」を出す", () => {
+    const idle = renderToStaticMarkup(<SiteHeader siteName="みつぶろ" homeHref="/" />);
+    const loading = renderToStaticMarkup(<SiteHeader siteName="みつぶろ" homeHref="/" loading />);
+
+    expect(idle).toMatch(/<p role="status"[^>]*><\/p>/);
+    expect(loading).toMatch(/<p role="status"[^>]*>読み込み中…<\/p>/);
+  });
 });

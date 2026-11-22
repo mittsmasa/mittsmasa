@@ -18,6 +18,9 @@ function plainText(tokens: readonly Token[]): string {
 /**
  * 記事の抜粋を作る。本文の最初の段落を、記法を除いた文字にする。
  *
+ * ビルドのとき（build/postsPlugin.ts）だけ使う。ブラウザで動くコードからは import しない。
+ * import すると、marked がブラウザのバンドルに入る。
+ *
  * @param body frontmatter を除いた Markdown
  * @returns 段落が 1 つも無ければ空文字
  */

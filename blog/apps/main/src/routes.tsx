@@ -3,7 +3,8 @@ import { PostListPage } from "./pages/PostListPage.tsx";
 import { PostPage } from "./pages/PostPage.tsx";
 import { TopPage } from "./pages/TopPage.tsx";
 import { postListPath, postListPattern, postPath, postPattern, topPath } from "./paths.ts";
-import { findPost, posts } from "./posts/index.ts";
+import { adjacentPosts } from "./posts/adjacentPosts.ts";
+import { findPost, loadPostBody, posts } from "./posts/index.ts";
 import { matchRoute, type RouteParams } from "./router/index.ts";
 
 type AppRoute = {
@@ -26,7 +27,15 @@ const routes: readonly AppRoute[] = [
     pattern: postPattern,
     render: ({ slug }) => {
       const post = slug === undefined ? undefined : findPost(slug);
-      return post && <PostPage post={post} />;
+      return (
+        post && (
+          <PostPage
+            post={post}
+            body={loadPostBody(post.slug)}
+            {...adjacentPosts(posts, post.slug)}
+          />
+        )
+      );
     },
   },
 ];

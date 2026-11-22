@@ -3,7 +3,7 @@ import { describe, expect, test } from "vite-plus/test";
 import { PostListPage } from "./PostListPage.tsx";
 
 function post(slug: string, date: string) {
-  return { slug, title: `${slug} の題`, date, excerpt: "", html: "" };
+  return { slug, title: `${slug} の題`, date, excerpt: "" };
 }
 
 describe("PostListPage", () => {

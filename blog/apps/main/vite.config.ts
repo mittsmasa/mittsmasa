@@ -1,6 +1,7 @@
 import pandacss from "@pandacss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite-plus";
+import { postsPlugin } from "./build/postsPlugin.ts";
 
 export default defineConfig({
   plugins: [
@@ -11,6 +12,7 @@ export default defineConfig({
       transform: true,
     }),
     react(),
+    postsPlugin(),
   ],
   build: {
     // 書体は文字の範囲ごとに 200 個以上に分かれている。小さいものを CSS に埋め込むと、

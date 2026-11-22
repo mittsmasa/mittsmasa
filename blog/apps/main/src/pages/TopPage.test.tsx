@@ -3,7 +3,7 @@ import { describe, expect, test } from "vite-plus/test";
 import { TopPage } from "./TopPage.tsx";
 
 function post(slug: string, date: string) {
-  return { slug, title: `${slug} の題`, date, excerpt: `${slug} の抜粋`, html: "" };
+  return { slug, title: `${slug} の題`, date, excerpt: `${slug} の抜粋` };
 }
 
 /** `heading` の見出しを持つ section の HTML。無ければ `undefined` */

@@ -14,6 +14,10 @@ function hasPage(path: string): boolean {
 }
 
 export function App({ path: initialPath }: Props) {
-  const path = usePath(initialPath, hasPage);
-  return <Layout listLink={!isPostListPath(path)}>{renderPath(path) ?? <NotFoundPage />}</Layout>;
+  const { path, pending } = usePath(initialPath, hasPage);
+  return (
+    <Layout listLink={!isPostListPath(path)} pending={pending}>
+      {renderPath(path) ?? <NotFoundPage />}
+    </Layout>
+  );
 }
