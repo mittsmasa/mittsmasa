@@ -1,30 +1,41 @@
 import type { ReactNode } from "react";
-import { NotFoundPage } from "./pages/NotFoundPage.tsx";
 import { PostListPage } from "./pages/PostListPage.tsx";
 import { PostPage } from "./pages/PostPage.tsx";
-import { postListPath, postPath } from "./paths.ts";
+import { postListPath, postPath, postPattern } from "./paths.ts";
 import { findPost, posts } from "./posts/index.ts";
-import type { RouteParams } from "./router/index.ts";
+import { matchRoute, type RouteParams } from "./router/index.ts";
 
-export type AppRoute = {
+type AppRoute = {
   /** URLPattern の pathname の書き方 */
   pattern: string;
-  render: (params: RouteParams) => ReactNode;
+  /** 描画するページ。当たるものが無ければ `undefined` */
+  render: (params: RouteParams) => ReactNode | undefined;
 };
 
-export const routes: readonly AppRoute[] = [
+const routes: readonly AppRoute[] = [
   {
     pattern: postListPath,
     render: () => <PostListPage posts={posts} />,
   },
   {
-    pattern: "/posts/:slug",
+    pattern: postPattern,
     render: ({ slug }) => {
       const post = slug === undefined ? undefined : findPost(slug);
-      return post ? <PostPage post={post} /> : <NotFoundPage />;
+      return post && <PostPage post={post} />;
     },
   },
 ];
+
+/**
+ * パスに当たるページを返す。
+ *
+ * @param path URL の pathname
+ * @returns ルートに無いパス、記事が無いパスなら `undefined`
+ */
+export function renderPath(path: string): ReactNode | undefined {
+  const matched = matchRoute(routes, path);
+  return matched?.route.render(matched.params);
+}
 
 /** 静的 HTML として書き出すパスの一覧 */
 export const staticPaths: readonly string[] = [

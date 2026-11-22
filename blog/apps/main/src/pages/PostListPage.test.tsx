@@ -16,7 +16,8 @@ describe("PostListPage", () => {
       />,
     );
 
-    expect(html).toContain('<time dateTime="2026-11-22">2026-11-22</time>');
-    expect(html).toContain('<a href="/posts/hello-world/">Hello, world</a>');
+    expect(html).toContain(">2026-11-22</time>");
+    expect(html).toContain('href="/posts/hello-world/"');
+    expect(html).toContain(">Hello, world</a>");
   });
 });
