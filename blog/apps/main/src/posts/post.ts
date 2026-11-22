@@ -1,5 +1,3 @@
-import { marked } from "marked";
-
 /** frontmatter から読む、記事ごとの情報 */
 export type PostFrontmatter = {
   title: string;
@@ -33,11 +31,19 @@ export function toPostFrontmatter(name: string, fields: Record<string, string>):
   return { title, date };
 }
 
+/** ファイルパスから slug（ファイル名から拡張子を除いたもの）を作る */
+export function slugOf(filePath: string): string {
+  return filePath.slice(filePath.lastIndexOf("/") + 1).replace(/\.md$/, "");
+}
+
 /**
- * Markdown の本文を HTML に変換する。
+ * Markdown のファイルごとの frontmatter から、記事の一覧を作る。
  *
- * @param body frontmatter を除いた Markdown
+ * @param frontmatters ファイルパスと、検査済みの frontmatter の対応
+ * @returns 新しい順に並んだ記事
  */
-export function toPostHtml(body: string): string {
-  return marked.parse(body, { async: false });
+export function toPosts(frontmatters: Record<string, PostFrontmatter>): PostMeta[] {
+  return Object.entries(frontmatters)
+    .map(([filePath, frontmatter]) => ({ slug: slugOf(filePath), ...frontmatter }))
+    .sort((a, b) => b.date.localeCompare(a.date));
 }

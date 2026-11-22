@@ -1,6 +1,7 @@
 import type { Plugin } from "vite-plus";
 import { parseFrontmatter } from "../src/posts/frontmatter.ts";
-import { toPostFrontmatter, toPostHtml } from "../src/posts/post.ts";
+import { toPostHtml } from "../src/posts/html.ts";
+import { toPostFrontmatter } from "../src/posts/post.ts";
 
 /**
  * Markdown の記事を、ビルドのときに 2 通りのモジュールへ変換する。

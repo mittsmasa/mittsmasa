@@ -1,4 +1,4 @@
-import type { PostFrontmatter, PostMeta } from "./post.ts";
+import { slugOf, toPosts, type PostFrontmatter, type PostMeta } from "./post.ts";
 
 export type { PostMeta };
 
@@ -15,14 +15,8 @@ const bodyLoaders = import.meta.glob<string>("../../../../content/posts/*.md", {
   import: "default",
 });
 
-function slugOf(filePath: string): string {
-  return filePath.slice(filePath.lastIndexOf("/") + 1).replace(/\.md$/, "");
-}
-
 /** 公開している記事。新しい順 */
-export const posts: PostMeta[] = Object.entries(frontmatters)
-  .map(([filePath, frontmatter]) => ({ slug: slugOf(filePath), ...frontmatter }))
-  .sort((a, b) => b.date.localeCompare(a.date));
+export const posts: PostMeta[] = toPosts(frontmatters);
 
 export function findPost(slug: string): PostMeta | undefined {
   return posts.find((post) => post.slug === slug);
