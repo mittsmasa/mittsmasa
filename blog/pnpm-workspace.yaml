@@ -1,0 +1,12 @@
+packages:
+  - apps/*
+  - packages/*
+
+# 公開から 7 日未満のバージョンは入れない（単位は分）
+minimumReleaseAge: 10080
+
+# Vite+ の指定どおり、vite と vitest を同梱の版に向ける。
+# 版は `pnpm exec vp toolchain vite-plus-core` と `pnpm exec vp toolchain vitest` の出力に合わせる
+overrides:
+  "vite@*": "npm:@voidzero-dev/vite-plus-core@1.6.0"
+  "vitest@*": "5.1.0"
