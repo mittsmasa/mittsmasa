@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactElement } from "react";
 import { PostListPage } from "./pages/PostListPage.tsx";
 import { PostPage } from "./pages/PostPage.tsx";
 import { postListPath, postPath, postPattern } from "./paths.ts";
@@ -9,7 +9,7 @@ type AppRoute = {
   /** URLPattern の pathname の書き方 */
   pattern: string;
   /** 描画するページ。当たるものが無ければ `undefined` */
-  render: (params: RouteParams) => ReactNode | undefined;
+  render: (params: RouteParams) => ReactElement | undefined;
 };
 
 const routes: readonly AppRoute[] = [
@@ -32,7 +32,7 @@ const routes: readonly AppRoute[] = [
  * @param path URL の pathname
  * @returns ルートに無いパス、記事が無いパスなら `undefined`
  */
-export function renderPath(path: string): ReactNode | undefined {
+export function renderPath(path: string): ReactElement | undefined {
   const matched = matchRoute(routes, path);
   return matched?.route.render(matched.params);
 }

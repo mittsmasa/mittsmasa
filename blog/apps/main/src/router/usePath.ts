@@ -15,7 +15,8 @@ function canReplace(event: NavigateEvent): boolean {
  *
  * @param initialPath 最初の描画に使う pathname。サーバーとブラウザで同じ値を渡す
  * @param canHandle このアプリで描画できる pathname か。`false` を返した遷移は受け取らず、
- *   ブラウザの通常の読み込みに任せる。描画のたびに参照が変わらない関数を渡す
+ *   ブラウザの通常の読み込みに任せる。同じ文書の履歴への移動（戻る、進む）は、読み込みが
+ *   起きないので `false` でも受け取る。描画のたびに参照が変わらない関数を渡す
  */
 export function usePath(initialPath: string, canHandle: (path: string) => boolean): string {
   // path が同じでも遷移ごとに effect を走らせるため、オブジェクトで持つ
@@ -28,7 +29,8 @@ export function usePath(initialPath: string, canHandle: (path: string) => boolea
     const onNavigate = (event: NavigateEvent) => {
       if (!canReplace(event)) return;
       const { pathname } = new URL(event.destination.url);
-      if (!canHandle(pathname)) return;
+      // 同じ文書の履歴への移動は、受け取らないと URL だけが変わり、画面が前のまま残る
+      if (!event.destination.sameDocument && !canHandle(pathname)) return;
       event.intercept({
         // 描画が画面に反映されてから解決する。ブラウザはその後にスクロールとフォーカスを直す
         handler: () =>
