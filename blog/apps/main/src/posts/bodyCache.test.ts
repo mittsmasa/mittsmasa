@@ -64,4 +64,19 @@ describe("createBodyCache", () => {
     expect(cache.load("hello")).toBe(first);
     expect(loader.calls()).toBe(1);
   });
+
+  test("forgetFailed は、読み込み中のものを捨てない", () => {
+    let calls = 0;
+    const neverSettles = () => {
+      calls += 1;
+      return new Promise<string>(() => {});
+    };
+    const cache = createBodyCache(new Map([["hello", neverSettles]]));
+    const first = cache.load("hello");
+
+    cache.forgetFailed();
+
+    expect(cache.load("hello")).toBe(first);
+    expect(calls).toBe(1);
+  });
 });
