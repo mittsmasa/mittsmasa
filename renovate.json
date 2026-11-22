@@ -2,6 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
   "minimumReleaseAge": "7 days",
+  "platformAutomerge": false,
   "packageRules": [
     {
       "description": "major 以外は CI が通れば自動マージする",
