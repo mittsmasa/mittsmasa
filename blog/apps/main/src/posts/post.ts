@@ -31,3 +31,20 @@ export function toPost(slug: string, source: string): Post {
   }
   return { slug, title, date, html: marked.parse(body, { async: false }) };
 }
+
+function slugOf(filePath: string): string {
+  return filePath.slice(filePath.lastIndexOf("/") + 1).replace(/\.md$/, "");
+}
+
+/**
+ * Markdown のファイルの集まりから、記事の一覧を作る。
+ *
+ * @param sources ファイルパスと、frontmatter 付きの Markdown の対応。slug はファイル名から拡張子を除いたもの
+ * @returns 新しい順に並んだ記事
+ * @throws `toPost` と同じ
+ */
+export function toPosts(sources: Record<string, string>): Post[] {
+  return Object.entries(sources)
+    .map(([filePath, source]) => toPost(slugOf(filePath), source))
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
