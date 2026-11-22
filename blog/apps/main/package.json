@@ -1,0 +1,20 @@
+{
+  "name": "main",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build --outDir dist/client && vp build --outDir dist/server --ssr src/entry-server.tsx && node scripts/prerender.mjs",
+    "preview": "vp preview --outDir dist/client"
+  },
+  "dependencies": {
+    "marked": "^18.2.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0"
+  }
+}
