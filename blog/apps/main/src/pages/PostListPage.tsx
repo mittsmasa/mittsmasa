@@ -1,10 +1,10 @@
 import { postPath } from "../paths.ts";
-import type { Post } from "../posts/index.ts";
+import type { PostMeta } from "../posts/index.ts";
 import { SITE_NAME } from "./site.ts";
 
 type Props = {
   /** 表示する順に並んだ記事 */
-  posts: readonly Post[];
+  posts: readonly PostMeta[];
 };
 
 export function PostListPage({ posts }: Props) {

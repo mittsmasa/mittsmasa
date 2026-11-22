@@ -3,7 +3,7 @@ import { NotFoundPage } from "./pages/NotFoundPage.tsx";
 import { PostListPage } from "./pages/PostListPage.tsx";
 import { PostPage } from "./pages/PostPage.tsx";
 import { postListPath, postPath } from "./paths.ts";
-import { findPost, posts } from "./posts/index.ts";
+import { findPost, loadPostBody, posts } from "./posts/index.ts";
 import type { RouteParams } from "./router/index.ts";
 
 export type AppRoute = {
@@ -21,7 +21,7 @@ export const routes: readonly AppRoute[] = [
     pattern: "/posts/:slug",
     render: ({ slug }) => {
       const post = slug === undefined ? undefined : findPost(slug);
-      return post ? <PostPage post={post} /> : <NotFoundPage />;
+      return post ? <PostPage post={post} body={loadPostBody(post.slug)} /> : <NotFoundPage />;
     },
   },
 ];

@@ -9,7 +9,11 @@ type Props = {
 };
 
 export function App({ path: initialPath }: Props) {
-  const path = usePath(initialPath);
+  const { path, pending } = usePath(initialPath);
   const matched = matchRoute(routes, path);
-  return <Layout>{matched ? matched.route.render(matched.params) : <NotFoundPage />}</Layout>;
+  return (
+    <Layout pending={pending}>
+      {matched ? matched.route.render(matched.params) : <NotFoundPage />}
+    </Layout>
+  );
 }
