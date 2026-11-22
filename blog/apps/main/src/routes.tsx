@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import { PostListPage } from "./pages/PostListPage.tsx";
 import { PostPage } from "./pages/PostPage.tsx";
 import { postListPath, postPath, postPattern } from "./paths.ts";
-import { findPost, posts } from "./posts/index.ts";
+import { findPost, loadPostBody, posts } from "./posts/index.ts";
 import { matchRoute, type RouteParams } from "./router/index.ts";
 
 type AppRoute = {
@@ -21,7 +21,7 @@ const routes: readonly AppRoute[] = [
     pattern: postPattern,
     render: ({ slug }) => {
       const post = slug === undefined ? undefined : findPost(slug);
-      return post && <PostPage post={post} />;
+      return post && <PostPage post={post} body={loadPostBody(post.slug)} />;
     },
   },
 ];

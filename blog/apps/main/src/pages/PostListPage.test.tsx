@@ -11,9 +11,7 @@ describe("PostListPage", () => {
 
   test("記事ごとに、日付と記事ページへのリンクを出す", () => {
     const html = renderToStaticMarkup(
-      <PostListPage
-        posts={[{ slug: "hello-world", title: "Hello, world", date: "2026-11-22", html: "" }]}
-      />,
+      <PostListPage posts={[{ slug: "hello-world", title: "Hello, world", date: "2026-11-22" }]} />,
     );
 
     expect(html).toContain(">2026-11-22</time>");

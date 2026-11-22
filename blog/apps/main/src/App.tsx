@@ -14,6 +14,6 @@ function hasPage(path: string): boolean {
 }
 
 export function App({ path: initialPath }: Props) {
-  const path = usePath(initialPath, hasPage);
-  return <Layout>{renderPath(path) ?? <NotFoundPage />}</Layout>;
+  const { path, pending } = usePath(initialPath, hasPage);
+  return <Layout pending={pending}>{renderPath(path) ?? <NotFoundPage />}</Layout>;
 }
