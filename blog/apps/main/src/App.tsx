@@ -1,5 +1,8 @@
+import { ErrorBoundary } from "./pages/ErrorBoundary.tsx";
 import { Layout } from "./pages/Layout.tsx";
+import { LoadErrorPage } from "./pages/LoadErrorPage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
+import { forgetFailedPostBodies } from "./posts/index.ts";
 import { usePath } from "./router/index.ts";
 import { isPostListPath, renderPath } from "./routes.tsx";
 
@@ -14,10 +17,13 @@ function hasPage(path: string): boolean {
 }
 
 export function App({ path: initialPath }: Props) {
-  const { path, pending } = usePath(initialPath, hasPage);
+  const { path, pending, navigationCount } = usePath(initialPath, hasPage, forgetFailedPostBodies);
   return (
     <Layout listLink={!isPostListPath(path)} pending={pending}>
-      {renderPath(path) ?? <NotFoundPage />}
+      {/* 遷移のたびに key を変えて作り直す。同じパスへの再試行でも、失敗の表示から元に戻る */}
+      <ErrorBoundary key={navigationCount} fallback={<LoadErrorPage path={path} />}>
+        {renderPath(path) ?? <NotFoundPage />}
+      </ErrorBoundary>
     </Layout>
   );
 }
