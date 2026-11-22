@@ -15,7 +15,7 @@ const { renderToHtml, staticPaths } = await import(
   pathToFileURL(join(dist, "server", "entry-server.js")).href
 );
 
-// 一覧ページの出力先がひな形と同じ index.html なので、書き出す前に読んでおく
+// トップページの出力先がひな形と同じ index.html なので、書き出す前に読んでおく
 const template = await readFile(join(clientDir, "index.html"), "utf8");
 for (const placeholder of [HEAD_PLACEHOLDER, BODY_PLACEHOLDER]) {
   if (!template.includes(placeholder)) {

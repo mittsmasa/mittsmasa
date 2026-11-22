@@ -9,7 +9,7 @@ export type PostFrontmatter = {
 export type PostMeta = PostFrontmatter & {
   /** URL に使う識別子。Markdown のファイル名から拡張子を除いたもの */
   slug: string;
-  /** 本文の最初の段落を、記法を除いた文字にしたもの。段落が無ければ空文字 */
+  /** 文字のある最初の段落を、記法を除いた文字にしたもの。無ければ空文字 */
   excerpt: string;
 };
 

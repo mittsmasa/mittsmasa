@@ -24,6 +24,10 @@ describe("toExcerpt", () => {
     expect(toExcerpt("one\ntwo")).toBe("one two");
   });
 
+  test("画像だけの段落は飛ばし、文字のある最初の段落を選ぶ", () => {
+    expect(toExcerpt("![写真](a.png)\n\n本文の段落。")).toBe("本文の段落。");
+  });
+
   test("段落が無ければ空文字を返す", () => {
     expect(toExcerpt("## 見出しだけ")).toBe("");
   });

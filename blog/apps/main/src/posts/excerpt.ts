@@ -16,18 +16,24 @@ function plainText(tokens: readonly Token[]): string {
 }
 
 /**
- * 記事の抜粋を作る。本文の最初の段落を、記法を除いた文字にする。
+ * 記事の抜粋を作る。文字のある最初の段落を、記法を除いた文字にする。画像だけの段落は飛ばす。
  *
  * ビルドのとき（build/postsPlugin.ts）だけ使う。ブラウザで動くコードからは import しない。
  * import すると、marked がブラウザのバンドルに入る。
  *
  * @param body frontmatter を除いた Markdown
- * @returns 段落が 1 つも無ければ空文字
+ * @returns 文字のある段落が 1 つも無ければ空文字
  */
 export function toExcerpt(body: string): string {
-  const paragraph = marked.lexer(body).find((token) => token.type === "paragraph");
-  if (!paragraph || !("tokens" in paragraph) || !paragraph.tokens) {
-    return "";
+  for (const token of marked.lexer(body)) {
+    if (token.type === "paragraph" && "tokens" in token && token.tokens) {
+      const text = plainText(token.tokens)
+        .replace(/\s*\n\s*/g, " ")
+        .trim();
+      if (text !== "") {
+        return text;
+      }
+    }
   }
-  return plainText(paragraph.tokens).replace(/\s*\n\s*/g, " ");
+  return "";
 }

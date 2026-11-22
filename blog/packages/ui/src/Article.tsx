@@ -43,8 +43,10 @@ const prose = css({
   "& strong": { fontWeight: 500 },
   "& pre": {
     // 左右の余白を打ち消して、端まで広げる
-    margin: { base: "4px -16px", md: "6px -24px" },
-    padding: { base: "16px", md: "20px 24px" },
+    marginBlock: { base: "4px", md: "6px" },
+    marginInline: "-gutter",
+    paddingBlock: { base: "16px", md: "20px" },
+    paddingInline: "gutter",
     overflowX: "auto",
     background: "codeBg",
     fontFamily: "mono",
@@ -57,9 +59,9 @@ const prose = css({
     display: "block",
     height: "auto",
     // モバイルは左右の余白を打ち消して端まで、PC は本文の幅
-    width: { base: "calc(100% + 32px)", md: "100%" },
+    width: { base: "calc(100% + token(spacing.gutter) * 2)", md: "100%" },
     maxWidth: "none",
-    marginInline: { base: "-16px", md: "0" },
+    marginInline: { base: "-gutter", md: "0" },
   },
 });
 

@@ -8,7 +8,8 @@ export default defineConfig({
     // Panda の設定と生成物は packages/ui が持つ。
     // transform で、css() の呼び出しをビルド時にクラス名の文字列へ置き換える
     pandacss({
-      cwd: new URL("../../packages/ui", import.meta.url).pathname,
+      // pathname はパーセントエンコードされているので、ファイルのパスに戻す
+      cwd: decodeURIComponent(new URL("../../packages/ui", import.meta.url).pathname),
       transform: true,
     }),
     react(),

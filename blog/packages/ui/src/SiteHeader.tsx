@@ -3,7 +3,7 @@ import { css } from "../styled-system/css";
 type Props = {
   siteName: string;
   /** トップのパス */
-  homeHref: string;
+  topHref: string;
   /** 一覧のパス。渡さなければ「一覧」のリンクを出さない */
   listHref?: string;
   /** 次のページを読み込んでいる間、true を渡す。「読み込み中…」を出す */
@@ -17,12 +17,12 @@ const headerLink = css({
   textDecoration: "none",
 });
 
-export function SiteHeader({ siteName, homeHref, listHref, loading = false }: Props) {
+export function SiteHeader({ siteName, topHref, listHref, loading = false }: Props) {
   return (
     <header
       className={css({
         // 線は、モバイルでは本文の幅、PC では画面の幅いっぱい
-        maxWidth: { base: "640px", md: "none" },
+        maxWidth: { base: "content", md: "none" },
         marginInline: "auto",
         borderBottom: "1px solid token(colors.fg)",
       })}
@@ -39,7 +39,7 @@ export function SiteHeader({ siteName, homeHref, listHref, loading = false }: Pr
         })}
       >
         <a
-          href={homeHref}
+          href={topHref}
           className={`${headerLink} ${css({ fontSize: "15px", fontWeight: 500, letterSpacing: "0.04em" })}`}
         >
           {siteName}

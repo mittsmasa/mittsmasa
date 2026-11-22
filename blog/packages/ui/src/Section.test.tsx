@@ -6,8 +6,8 @@ describe("Section", () => {
   test("section の名前が見出しになるよう、aria-labelledby で見出しを指す", () => {
     const html = renderToStaticMarkup(<Section heading="最新">中身</Section>);
 
-    const labelledBy = /<section aria-labelledby="([^"]+)"/.exec(html)?.[1];
-    const headingId = /<h2 id="([^"]+)"[^>]*>最新<\/h2>/.exec(html)?.[1];
+    const labelledBy = /<section[^>]*aria-labelledby="([^"]+)"/.exec(html)?.[1];
+    const headingId = /<h2[^>]*id="([^"]+)"[^>]*>最新<\/h2>/.exec(html)?.[1];
     expect(labelledBy).toBeTruthy();
     expect(headingId).toBe(labelledBy);
   });

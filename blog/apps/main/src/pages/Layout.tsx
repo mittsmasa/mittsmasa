@@ -21,7 +21,7 @@ export function Layout({ listLink, pending, children }: Props) {
     <>
       <SiteHeader
         siteName={SITE_NAME}
-        homeHref={topPath}
+        topHref={topPath}
         listHref={listLink ? postListPath : undefined}
         loading={showsPending}
       />
