@@ -9,7 +9,12 @@ export type PostFrontmatter = {
 export type PostMeta = PostFrontmatter & {
   /** URL に使う識別子。Markdown のファイル名から拡張子を除いたもの */
   slug: string;
+  /** 文字のある最初の段落を、記法を除いた文字にしたもの。無ければ空文字 */
+  excerpt: string;
 };
+
+/** `*.md?meta` のモジュールが出す値。slug はファイルパスから作るので含まない */
+export type PostMetaSource = Omit<PostMeta, "slug">;
 
 const DATE_FORMAT = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -37,13 +42,13 @@ export function slugOf(filePath: string): string {
 }
 
 /**
- * Markdown のファイルごとの frontmatter から、記事の一覧を作る。
+ * Markdown のファイルごとの情報から、記事の一覧を作る。
  *
- * @param frontmatters ファイルパスと、検査済みの frontmatter の対応
+ * @param sources ファイルパスと、`*.md?meta` が出す値の対応
  * @returns 新しい順に並んだ記事
  */
-export function toPosts(frontmatters: Record<string, PostFrontmatter>): PostMeta[] {
-  return Object.entries(frontmatters)
-    .map(([filePath, frontmatter]) => ({ slug: slugOf(filePath), ...frontmatter }))
+export function toPosts(sources: Record<string, PostMetaSource>): PostMeta[] {
+  return Object.entries(sources)
+    .map(([filePath, source]) => ({ slug: slugOf(filePath), ...source }))
     .sort((a, b) => b.date.localeCompare(a.date));
 }

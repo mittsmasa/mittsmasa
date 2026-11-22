@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
+import "@blog/ui/styles.css";
 import { App } from "./App.tsx";
 
 const root = document.getElementById("root");

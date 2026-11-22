@@ -28,7 +28,7 @@ describe("toPostFrontmatter", () => {
 });
 
 describe("toPosts", () => {
-  const source = (date: string) => ({ title: "Hello", date });
+  const source = (date: string) => ({ title: "Hello", date, excerpt: "" });
 
   test("ファイル名から拡張子を除いたものを slug にする", () => {
     const posts = toPosts({ "../content/posts/hello-world.md": source("2026-11-22") });
