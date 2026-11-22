@@ -1,5 +1,15 @@
-/** 一覧ページのパス */
-export const postListPath = "/";
+/** トップページのパス。pattern も同じ */
+export const topPath = "/";
+
+/**
+ * 一覧ページの pattern（URLPattern の pathname の書き方）。
+ *
+ * `matchRoute` は末尾の `/` を除いてから照合するので、pattern には末尾の `/` を付けない。
+ */
+export const postListPattern = "/posts";
+
+/** 一覧ページのパス。静的 HTML を `posts/index.html` に書き出すので、末尾に `/` を付ける */
+export const postListPath = "/posts/";
 
 /**
  * 記事ページの pattern（URLPattern の pathname の書き方）。

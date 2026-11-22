@@ -1,18 +1,23 @@
+import { SiteHeader } from "@blog/ui";
 import type { ReactNode } from "react";
-import { postListPath } from "../paths.ts";
+import { postListPath, topPath } from "../paths.ts";
 import { SITE_NAME } from "./site.ts";
 
 type Props = {
+  /** ヘッダーに「一覧」のリンクを出すか。一覧ページ自身では出さない */
+  listLink: boolean;
   children: ReactNode;
 };
 
-export function Layout({ children }: Props) {
+export function Layout({ listLink, children }: Props) {
   return (
     <>
-      <header>
-        <a href={postListPath}>{SITE_NAME}</a>
-      </header>
-      <main>{children}</main>
+      <SiteHeader
+        siteName={SITE_NAME}
+        homeHref={topPath}
+        listHref={listLink ? postListPath : undefined}
+      />
+      {children}
     </>
   );
 }

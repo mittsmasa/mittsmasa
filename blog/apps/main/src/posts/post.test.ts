@@ -9,6 +9,7 @@ describe("toPost", () => {
       slug: "hello-world",
       title: "Hello, world",
       date: "2026-11-22",
+      excerpt: "最初の記事です。",
       html: "<p>最初の<strong>記事</strong>です。</p>\n",
     });
   });

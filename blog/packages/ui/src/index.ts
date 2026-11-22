@@ -4,6 +4,7 @@ export { AuthorNote } from "./AuthorNote.tsx";
 export { FeaturedPost } from "./FeaturedPost.tsx";
 export { Lead } from "./Lead.tsx";
 export { PageMain } from "./PageMain.tsx";
+export { PageTitle } from "./PageTitle.tsx";
 export { PostPager } from "./PostPager.tsx";
 export { PostRow } from "./PostRow.tsx";
 export { Section } from "./Section.tsx";

@@ -1,5 +1,6 @@
 import { css } from "../styled-system/css";
 import { formatDate } from "./formatDate.ts";
+import { PageTitle } from "./PageTitle.tsx";
 
 type Props = {
   /** `YYYY-MM-DD` */
@@ -85,16 +86,7 @@ export function Article({ date, title, html }: Props) {
         <time dateTime={date} className={css({ textStyle: "meta", color: "fgMuted" })}>
           {formatDate(date, "full")}
         </time>
-        <h1
-          className={css({
-            margin: 0,
-            fontSize: { base: "24px", md: "30px" },
-            lineHeight: { base: "34px", md: "44px" },
-            fontWeight: 500,
-          })}
-        >
-          {title}
-        </h1>
+        <PageTitle>{title}</PageTitle>
       </div>
       <div className={prose} dangerouslySetInnerHTML={{ __html: html }} />
     </article>

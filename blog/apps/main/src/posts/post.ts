@@ -1,4 +1,5 @@
 import { marked } from "marked";
+import { toExcerpt } from "./excerpt.ts";
 import { parseFrontmatter } from "./frontmatter.ts";
 
 export type Post = {
@@ -7,6 +8,8 @@ export type Post = {
   title: string;
   /** 公開日。`YYYY-MM-DD` */
   date: string;
+  /** 本文の最初の段落を、記法を除いた文字にしたもの。段落が無ければ空文字 */
+  excerpt: string;
   /** Markdown の本文を変換した HTML */
   html: string;
 };
@@ -29,7 +32,13 @@ export function toPost(slug: string, source: string): Post {
   if (!date || !DATE_FORMAT.test(date)) {
     throw new Error(`${slug}: frontmatter の date は YYYY-MM-DD で書いてください`);
   }
-  return { slug, title, date, html: marked.parse(body, { async: false }) };
+  return {
+    slug,
+    title,
+    date,
+    excerpt: toExcerpt(body),
+    html: marked.parse(body, { async: false }),
+  };
 }
 
 function slugOf(filePath: string): string {

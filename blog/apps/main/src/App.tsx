@@ -1,7 +1,7 @@
 import { Layout } from "./pages/Layout.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
 import { usePath } from "./router/index.ts";
-import { renderPath } from "./routes.tsx";
+import { isPostListPath, renderPath } from "./routes.tsx";
 
 type Props = {
   /** 最初に描画する URL の pathname。サーバーとブラウザで同じ値を渡す */
@@ -15,5 +15,5 @@ function hasPage(path: string): boolean {
 
 export function App({ path: initialPath }: Props) {
   const path = usePath(initialPath, hasPage);
-  return <Layout>{renderPath(path) ?? <NotFoundPage />}</Layout>;
+  return <Layout listLink={!isPostListPath(path)}>{renderPath(path) ?? <NotFoundPage />}</Layout>;
 }
