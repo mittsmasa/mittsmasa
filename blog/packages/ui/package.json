@@ -44,7 +44,7 @@
   },
   "scripts": {
     "prepare": "panda codegen && panda lib",
-    "watch": "panda codegen && panda lib --watch",
+    "dev": "panda codegen && panda lib --watch",
     "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
