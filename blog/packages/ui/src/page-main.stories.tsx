@@ -5,7 +5,6 @@ import { PageMain } from "./page-main.tsx";
 import { PostRow } from "./post-row.tsx";
 import { Section } from "./section.tsx";
 
-/** トップの `<main>` と同じ並び。セクションの間と左右の余白を見る */
 const meta = {
   component: PageMain,
   args: {

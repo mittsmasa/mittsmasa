@@ -1,18 +1,6 @@
-# storybook-addon-vrt で、blog/packages/ui のストーリーを PR の base と head で撮り比べる。
-#
-# 基準画像はコミットしない。同じジョブ・同じコンテナで base（PR のマージコミットの 1 番目の親）を撮り、
-# head の .vrt/expected に置いてから head を撮って比べる。macOS と Linux では書体の描画が違うため、
-# 比較はこのコンテナの中だけで行う。
-#
-# 見た目の差分（changed / added / removed）があってもジョブは落とさない。PR のコメントと
-# artifact `vrt-report`（report.html を開く）で確かめる。head でストーリーのテストが落ちたときだけ失敗にする。
-#
-# トリガーは pull_request のままにする（pull_request_target にしない）。コメントのステップでは
-# head で入れた svrt がトークンを持って動くため。fork からの PR ではトークンが読み取り専用になる
 name: blog VRT
 
 on:
-  # main の必須チェックにしないので、paths で絞る
   pull_request:
     paths:
       - "blog/packages/ui/**"
@@ -33,18 +21,15 @@ jobs:
   vrt:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    # 描画をそろえるため、イメージを digest で固定する。版は blog/packages/ui の playwright と合わせる
     container:
       image: mcr.microsoft.com/playwright:v1.65.1-noble@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579
     permissions:
       contents: read
-      # 結果を PR にコメントする。fork からの PR ではトークンが読み取り専用になり、コメントだけ失敗する
       pull-requests: write
     defaults:
       run:
         shell: bash
     steps:
-      # HEAD はマージコミット。base を取り出すため、親まで取る
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
@@ -55,22 +40,17 @@ jobs:
           cache: true
           run-install: |
             args: ["--frozen-lockfile"]
-      # マージコミットの 1 番目の親が、GitHub がマージに使った base。
-      # head のワークスペースの外に置き、head の pnpm workspace や Vitest に拾わせない
       - name: base を worktree に用意する
         run: |
           git -c safe.directory="$GITHUB_WORKSPACE" worktree add --detach "$RUNNER_TEMP/vrt-base" HEAD^1
-      # base は base の依存と設定で撮る。撮れた画像を head の .vrt/expected に置く
       - name: base を撮って基準画像にする
         run: |
           cd "$RUNNER_TEMP/vrt-base/blog"
           vp install --frozen-lockfile
           cd packages/ui
-          # GITHUB_ACTIONS=false: base 側の比較結果を、ジョブのまとめと注釈に出さない
           rc=0
           GITHUB_ACTIONS=false npx --no-install svrt run -- --config vitest.storybook.config.ts || rc=$?
           case "$rc" in
-            # 1 は base 側での比較の差分で、ここでは意味を持たない
             0 | 1) ;;
             3) echo "::warning::base のストーリーのテストが落ちた。撮れた分だけで比べ、撮れなかったストーリーは added になる" ;;
             *) echo "::warning::base を撮れなかった（svrt の終了コード $rc）。head の全部が added になる" ;;
@@ -88,7 +68,6 @@ jobs:
           rc=0
           npx --no-install svrt run -- --config vitest.storybook.config.ts || rc=$?
           echo "exit-code=$rc" >> "$GITHUB_OUTPUT"
-          # 1 は見た目の差分。報告だけにして落とさない
           case "$rc" in
             0 | 1) exit 0 ;;
             *) exit "$rc" ;;
@@ -96,12 +75,10 @@ jobs:
       - name: PR にコメントする
         if: always() && steps.vrt.outputs.exit-code != ''
         working-directory: blog/packages/ui
-        # fork からの PR ではトークンが読み取り専用で 403 になる。コメントの失敗でジョブを落とさない
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: npx --no-install svrt comment
-      # upload-artifact（v4.4 以降）は既定で隠しファイルを除くので、include-hidden-files で .vrt を拾う
       - name: .vrt を artifact に上げる
         if: always() && (steps.vrt.outputs.exit-code == '1' || steps.vrt.outcome == 'failure')
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

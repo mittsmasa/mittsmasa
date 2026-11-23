@@ -6,7 +6,6 @@ on:
     paths:
       - "blog/**"
       - ".github/workflows/blog-ci.yml"
-  # main の必須チェックなので、PR では paths で絞らず常に走らせる
   pull_request:
 
 permissions:

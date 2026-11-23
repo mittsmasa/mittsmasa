@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { createBodyCache } from "./body-cache.ts";
 
-/** 呼ばれた回数を数える loader。`results` の順に、文字列なら成功、Error なら失敗する */
 function countingLoader(results: (string | Error)[]) {
   let calls = 0;
   const load = () => {

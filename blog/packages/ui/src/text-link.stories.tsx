@@ -4,7 +4,6 @@ import { TextLink } from "./text-link.tsx";
 
 const meta = {
   component: TextLink,
-  // 自分では幅を持たない。トップの <main> の中に置く
   decorators: [(Story) => <PageMain>{Story()}</PageMain>],
   args: { href: "/posts/", children: "すべての記事" },
 } satisfies Meta<typeof TextLink>;

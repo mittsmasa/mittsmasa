@@ -1,12 +1,3 @@
-# blog/apps/main の静的 HTML を Cloudflare Workers（static assets）にデプロイする。
-#
-# 秘匿情報は environment `production` の secrets にだけ置く:
-#   CLOUDFLARE_API_TOKEN  「Edit Cloudflare Workers」テンプレートで、デプロイ先のアカウントだけに絞ったトークン
-#   CLOUDFLARE_ACCOUNT_ID デプロイ先のアカウント ID
-# environment の Deployment branches は main に限る。
-#
-# build ジョブは秘匿情報を持たずにビルドし、deploy ジョブはその成果物を上げるだけにする。
-# 外部からの PR に秘匿情報を渡さないため、PR では走らせない。
 name: blog deploy
 
 on:
@@ -20,7 +11,6 @@ on:
 permissions:
   contents: read
 
-# デプロイを途中で止めると、どの版が出ているかがわからなくなる。順に流す
 concurrency:
   group: blog-deploy
   cancel-in-progress: false
@@ -63,14 +53,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      # 秘匿情報を持つジョブなので、キャッシュは使わず、入れる依存も main とその依存に絞る
       - uses: voidzero-dev/setup-vp@cab1ab9eaff52d4857875f4f2c016e36af8f2c76 # v1.22.0
         with:
           working-directory: blog
           cache: false
           run-install: |
             args: ["--frozen-lockfile", "--filter", "main..."]
-      # assets.directory は wrangler.jsonc の位置から解決されるので、ビルドしたときと同じ場所に戻す
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: blog-site
@@ -78,7 +66,6 @@ jobs:
       - name: Deploy
         run: vp exec wrangler deploy
         env:
-          # wrangler の匿名の利用統計を送らない。wrangler.jsonc の send_metrics では止まらなかった
           WRANGLER_SEND_METRICS: "false"
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

@@ -3,15 +3,12 @@ import { formatDate } from "./format-date.ts";
 
 type Props = {
   href: string;
-  /** `YYYY-MM-DD` */
   date: string;
   title: string;
   excerpt: string;
-  /** 記事へのリンクの文言。「つづきを読む」など */
   moreLabel: string;
 };
 
-/** 抜粋つきで大きく見せる記事。`Section` の中に置く */
 export function FeaturedPost({ href, date, title, excerpt, moreLabel }: Props) {
   return (
     <div

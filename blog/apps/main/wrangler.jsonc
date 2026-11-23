@@ -1,13 +1,9 @@
-// Cloudflare Workers の static assets で、ビルドした静的 HTML を配る。Worker のコードは持たない。
-// 静的アセットは、リクエストに最も近い拠点から返る（リージョンの指定は無い）
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "mittsmasa-blog",
   "compatibility_date": "2026-11-23",
   "assets": {
-    // scripts/prerender.mjs が各ページの index.html を書き出す先
     "directory": "./dist/client",
-    // posts/<slug>/index.html を /posts/<slug>/ で返す。src/paths.ts の末尾 `/` と合わせる
     "html_handling": "auto-trailing-slash",
   },
 }

@@ -1,15 +1,8 @@
 export type YearGroup<P> = {
-  /** `YYYY` */
   year: string;
   posts: P[];
 };
 
-/**
- * 記事を公開した年ごとにまとめる。
- *
- * @param posts 新しい順に並んだ記事。`date` は `YYYY-MM-DD`
- * @returns 新しい年から並んだまとまり。まとまりの中の順は `posts` のまま
- */
 export function groupByYear<P extends { date: string }>(posts: readonly P[]): YearGroup<P>[] {
   const groups: YearGroup<P>[] = [];
   for (const post of posts) {

@@ -5,7 +5,6 @@ type Props = {
   children: ReactNode;
 };
 
-/** ページの題（h1） */
 export function PageTitle({ children }: Props) {
   return (
     <h1

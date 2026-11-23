@@ -4,7 +4,6 @@ import { AuthorNote } from "./author-note.tsx";
 
 const meta = {
   component: AuthorNote,
-  // 自分では幅を持たない。記事の下のまとまりの中に置く
   decorators: [(Story) => <ArticleFooter>{Story()}</ArticleFooter>],
   args: { name: "mittsmasa" },
 } satisfies Meta<typeof AuthorNote>;

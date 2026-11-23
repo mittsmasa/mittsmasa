@@ -14,7 +14,6 @@ const app = (
   </StrictMode>
 );
 
-// 事前に書き出した HTML があれば引き継ぐ。開発サーバーでは空なので、新しく描画する
 if (root.firstElementChild) {
   hydrateRoot(root, app);
 } else {
