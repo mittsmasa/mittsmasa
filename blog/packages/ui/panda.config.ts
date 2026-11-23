@@ -1,10 +1,13 @@
 import { defineConfig } from "@pandacss/dev";
+import presetBase from "@pandacss/preset-base";
 
 // css() に書けるのは、ここで定義した semantic token と text style だけ。
 // 値は Design キャンバス「ブログ モバイルモック」に出てくるものだけを置く。
 // 生の値に名前を付ける層（gray.900 など）は作らない。strictTokens はその層の名前も通すため
 export default defineConfig({
-  presets: ["@pandacss/preset-base"],
+  // 文字列で書くと、`panda lib` が出す preset.mjs に名前のまま残り、アプリの場所から探される。
+  // オブジェクトで渡すと preset.mjs に同梱され、アプリは preset-base を入れなくてよい
+  presets: [presetBase],
   preflight: false,
   include: ["./src/**/*.{ts,tsx}"],
   exclude: ["./src/**/*.test.{ts,tsx}"],
