@@ -2,8 +2,17 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "mittsmasa-blog",
   "compatibility_date": "2026-11-23",
+  "main": "./worker/index.ts",
   "assets": {
     "directory": "./dist/client",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/images/*"],
   },
+  "r2_buckets": [
+    {
+      "binding": "IMAGES",
+      "bucket_name": "mittsmasa-blog-images",
+    },
+  ],
 }
