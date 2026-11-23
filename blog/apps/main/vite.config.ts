@@ -5,13 +5,10 @@ import { postsPlugin } from "./build/postsPlugin.ts";
 
 export default defineConfig({
   plugins: [
-    // Panda の設定と生成物は packages/ui が持つ。
-    // transform で、css() の呼び出しをビルド時にクラス名の文字列へ置き換える
-    pandacss({
-      // pathname はパーセントエンコードされているので、ファイルのパスに戻す
-      cwd: decodeURIComponent(new URL("../../packages/ui", import.meta.url).pathname),
-      transform: true,
-    }),
+    // スタイルは @blog/ui の部品が持つ（panda.config.ts の designSystem）。
+    // transform で、css() の呼び出しをビルド時にクラス名の文字列へ置き換える。
+    // アプリのコードは css() を呼ばないので、アプリ用の styled-system は作らない
+    pandacss({ transform: true, codegen: false }),
     react(),
     postsPlugin(),
   ],
