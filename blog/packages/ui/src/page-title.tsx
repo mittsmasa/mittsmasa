@@ -10,10 +10,8 @@ export function PageTitle({ children }: Props) {
   return (
     <h1
       className={css({
-        margin: 0,
-        fontSize: { base: "24px", md: "30px" },
-        lineHeight: { base: "34px", md: "44px" },
-        fontWeight: 500,
+        margin: "none",
+        textStyle: "pageTitle",
       })}
     >
       {children}

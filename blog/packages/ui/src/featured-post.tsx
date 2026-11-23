@@ -1,5 +1,5 @@
 import { css } from "../styled-system/css";
-import { formatDate } from "./formatDate.ts";
+import { formatDate } from "./format-date.ts";
 
 type Props = {
   href: string;
@@ -18,19 +18,17 @@ export function FeaturedPost({ href, date, title, excerpt, moreLabel }: Props) {
       className={css({
         display: "flex",
         flexDirection: "column",
-        marginTop: { base: "20px", md: "24px" },
+        marginTop: "featured.top",
       })}
     >
-      <time dateTime={date} className={css({ textStyle: "meta", color: "fgMuted" })}>
+      <time dateTime={date} className={css({ textStyle: "meta", color: "fg.muted" })}>
         {formatDate(date, "full")}
       </time>
       <h3
         className={css({
-          marginTop: { base: "6px", md: "8px" },
-          marginBottom: { base: "12px", md: "14px" },
-          fontSize: { base: "22px", md: "26px" },
-          lineHeight: { base: "32px", md: "40px" },
-          fontWeight: 500,
+          marginTop: "featured.titleTop",
+          marginBottom: "featured.titleBottom",
+          textStyle: "featuredTitle",
         })}
       >
         <a href={href} className={css({ textDecoration: "none" })}>
@@ -39,9 +37,8 @@ export function FeaturedPost({ href, date, title, excerpt, moreLabel }: Props) {
       </h3>
       <p
         className={css({
-          margin: 0,
-          fontSize: { base: "16px", md: "17px" },
-          lineHeight: { base: 1.75, md: 1.8 },
+          margin: "none",
+          textStyle: "body",
         })}
       >
         {excerpt}
@@ -52,8 +49,8 @@ export function FeaturedPost({ href, date, title, excerpt, moreLabel }: Props) {
           display: "flex",
           alignItems: "center",
           alignSelf: "flex-start",
-          height: "44px",
-          marginTop: "4px",
+          height: "tapTarget",
+          marginTop: "featured.moreTop",
           textStyle: "smallLink",
         })}
       >

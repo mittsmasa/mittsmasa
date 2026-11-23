@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { formatDate } from "./formatDate.ts";
+import { formatDate } from "./format-date.ts";
 
 describe("formatDate", () => {
   test("full は年月日を . でつなぐ", () => {

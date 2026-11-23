@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vite-plus/test";
-import { PostListPage } from "./PostListPage.tsx";
+import { PostListPage } from "./post-list-page.tsx";
 
 function post(slug: string, date: string) {
   return { slug, title: `${slug} の題`, date, excerpt: "" };

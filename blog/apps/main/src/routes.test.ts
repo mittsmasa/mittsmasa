@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
-import { PostListPage } from "./pages/PostListPage.tsx";
-import { PostPage } from "./pages/PostPage.tsx";
-import { TopPage } from "./pages/TopPage.tsx";
+import { PostListPage } from "./pages/post-list-page.tsx";
+import { PostPage } from "./pages/post-page.tsx";
+import { TopPage } from "./pages/top-page.tsx";
 import { postListPath, topPath } from "./paths.ts";
 import { isPostListPath, renderPath, staticPaths } from "./routes.tsx";
 

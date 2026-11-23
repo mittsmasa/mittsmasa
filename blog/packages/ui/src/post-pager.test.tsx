@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vite-plus/test";
-import { PostPager } from "./PostPager.tsx";
+import { PostPager } from "./post-pager.tsx";
 
 const newer = { href: "/posts/newer/", title: "新しい記事" };
 const older = { href: "/posts/older/", title: "古い記事" };

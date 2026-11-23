@@ -1,5 +1,5 @@
 import { css } from "../styled-system/css";
-import { formatDate, type DateStyle } from "./formatDate.ts";
+import { formatDate, type DateStyle } from "./format-date.ts";
 
 type Props = {
   href: string;
@@ -11,16 +11,14 @@ type Props = {
 };
 
 const dateBase = css({
-  fontSize: { base: "12px", md: "13px" },
-  lineHeight: { base: "20px", md: "26px" },
-  letterSpacing: "0.06em",
-  color: "fgMuted",
+  textStyle: "rowDate",
+  color: "fg.muted",
 });
 
 // PC では日付を列にそろえる。列の幅は表記の長さで決まる
 const dateColumn: Record<DateStyle, string> = {
-  full: css({ md: { flex: "0 0 88px" } }),
-  monthDay: css({ md: { flex: "0 0 48px" } }),
+  full: css({ md: { flex: "none", width: "dateColumn.full" } }),
+  monthDay: css({ md: { flex: "none", width: "dateColumn.monthDay" } }),
 };
 
 /** 日付と題だけの記事の行。行の全体がリンク */
@@ -32,18 +30,16 @@ export function PostRow({ href, date, title, dateStyle }: Props) {
         display: "flex",
         flexDirection: { base: "column", md: "row" },
         alignItems: { md: "baseline" },
-        gap: { base: "2px", md: "24px" },
-        paddingBlock: { base: "12px", md: "13px" },
-        borderBottom: "1px solid token(colors.line)",
+        gap: "row.gap",
+        paddingBlock: "row.paddingBlock",
+        borderBottom: "default",
         textDecoration: "none",
       })}
     >
       <time dateTime={date} className={`${dateBase} ${dateColumn[dateStyle]}`}>
         {formatDate(date, dateStyle)}
       </time>
-      <span className={css({ fontSize: { base: "16px", md: "17px" }, lineHeight: "26px" })}>
-        {title}
-      </span>
+      <span className={css({ textStyle: "rowTitle" })}>{title}</span>
     </a>
   );
 }

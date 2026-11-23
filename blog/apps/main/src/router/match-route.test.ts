@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { matchRoute } from "./matchRoute.ts";
+import { matchRoute } from "./match-route.ts";
 
 const list = { pattern: "/" };
 const post = { pattern: "/posts/:slug" };

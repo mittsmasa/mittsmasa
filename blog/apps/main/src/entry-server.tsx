@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { prerender } from "react-dom/static";
-import { App } from "./App.tsx";
+import { App } from "./app.tsx";
 import { renderPath } from "./routes.tsx";
 
 export { staticPaths } from "./routes.tsx";

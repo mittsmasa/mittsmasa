@@ -19,20 +19,17 @@ export function Section({ heading, children, footer }: Props) {
       <h2
         id={headingId}
         className={css({
-          margin: 0,
-          paddingBottom: "12px",
-          borderBottom: "1px solid token(colors.fg)",
-          fontSize: "13px",
-          lineHeight: "20px",
-          fontWeight: 500,
-          letterSpacing: "0.08em",
+          margin: "none",
+          paddingBottom: "section.headingBottom",
+          borderBottom: "strong",
+          textStyle: "sectionHeading",
         })}
       >
         {heading}
       </h2>
       {children}
       {footer !== undefined && (
-        <div className={css({ display: "flex", marginTop: "8px" })}>{footer}</div>
+        <div className={css({ display: "flex", marginTop: "section.footerTop" })}>{footer}</div>
       )}
     </section>
   );

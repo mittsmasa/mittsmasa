@@ -2,7 +2,7 @@ import { Lead, PageMain, SiteHeader } from "@blog/ui";
 import { Suspense, ViewTransition, type ReactNode } from "react";
 import { postListPath, topPath } from "../paths.ts";
 import { SITE_NAME } from "./site.ts";
-import { useDelayed } from "./useDelayed.ts";
+import { useDelayed } from "./use-delayed.ts";
 
 /** 遷移がこの時間（ミリ秒）より長くかかったときだけ、読み込み中の表示を出す */
 const PENDING_DELAY_MS = 200;

@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vite-plus/test";
-import { PostRow } from "./PostRow.tsx";
+import { PostRow } from "./post-row.tsx";
 
 describe("PostRow", () => {
   test("行の全体を記事へのリンクにし、日付を機械が読める形でも持つ", () => {

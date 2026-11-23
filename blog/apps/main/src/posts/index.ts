@@ -1,10 +1,10 @@
-import { createBodyCache } from "./bodyCache.ts";
+import { createBodyCache } from "./body-cache.ts";
 import { slugOf, toPosts, type PostMeta, type PostMetaSource } from "./post.ts";
 
 export type { PostMeta };
 
 // 読むのは content/posts だけ。下書きを置く content/drafts は対象に入れない。
-// ?meta と ?body は build/postsPlugin.ts が作る
+// ?meta と ?body は build/posts-plugin.ts が作る
 const metaSources = import.meta.glob<PostMetaSource>("../../../../content/posts/*.md", {
   query: "?meta",
   import: "default",

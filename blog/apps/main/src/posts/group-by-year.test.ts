@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { groupByYear } from "./groupByYear.ts";
+import { groupByYear } from "./group-by-year.ts";
 
 describe("groupByYear", () => {
   test("年ごとにまとめ、年の順とまとまりの中の順は元の並びのままにする", () => {

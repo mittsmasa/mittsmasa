@@ -1,7 +1,7 @@
-import { ErrorBoundary } from "./pages/ErrorBoundary.tsx";
-import { Layout } from "./pages/Layout.tsx";
-import { LoadErrorPage } from "./pages/LoadErrorPage.tsx";
-import { NotFoundPage } from "./pages/NotFoundPage.tsx";
+import { ErrorBoundary } from "./pages/error-boundary.tsx";
+import { Layout } from "./pages/layout.tsx";
+import { LoadErrorPage } from "./pages/load-error-page.tsx";
+import { NotFoundPage } from "./pages/not-found-page.tsx";
 import { forgetFailedPostBodies } from "./posts/index.ts";
 import { usePath } from "./router/index.ts";
 import { isPostListPath, renderPath } from "./routes.tsx";

@@ -15,7 +15,7 @@ export function TextLink({ href, children }: Props) {
         display: "flex",
         alignItems: "center",
         alignSelf: "flex-start",
-        height: "44px",
+        height: "tapTarget",
         textStyle: "smallLink",
       })}
     >

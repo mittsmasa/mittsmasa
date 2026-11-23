@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import { prerender } from "react-dom/static";
 import { describe, expect, test } from "vite-plus/test";
-import { PostPage } from "./PostPage.tsx";
+import { PostPage } from "./post-page.tsx";
 
 function post(slug: string) {
   return { slug, title: `${slug} の題`, date: "2026-11-22", excerpt: "" };

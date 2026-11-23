@@ -12,12 +12,10 @@ export function SiteFooter({ children }: Props) {
         maxWidth: "content",
         marginInline: "auto",
         paddingInline: "gutter",
-        paddingTop: { base: "44px", md: "64px" },
-        paddingBottom: { base: "40px", md: "56px" },
-        fontSize: "12px",
-        lineHeight: "20px",
-        letterSpacing: "0.06em",
-        color: "fgMuted",
+        paddingTop: "footer.top",
+        paddingBottom: "footer.bottom",
+        textStyle: "footnote",
+        color: "fg.muted",
       })}
     >
       {children}

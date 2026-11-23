@@ -1,3 +1,3 @@
-export { matchRoute, type RouteMatch, type RouteParams } from "./matchRoute.ts";
-export type { NavigationTransitionType } from "./transitionType.ts";
-export { usePath, type RouterState } from "./usePath.ts";
+export { matchRoute, type RouteMatch, type RouteParams } from "./match-route.ts";
+export type { NavigationTransitionType } from "./transition-type.ts";
+export { usePath, type RouterState } from "./use-path.ts";

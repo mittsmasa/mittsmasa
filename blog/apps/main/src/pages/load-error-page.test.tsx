@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vite-plus/test";
-import { LoadErrorPage } from "./LoadErrorPage.tsx";
+import { LoadErrorPage } from "./load-error-page.tsx";
 
 describe("LoadErrorPage", () => {
   test("再試行のリンクが、渡したパスを指す", () => {
