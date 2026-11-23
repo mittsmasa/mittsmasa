@@ -1,6 +1,8 @@
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { vrt } from "storybook-addon-vrt/vitest-plugin";
 import { defineConfig, mergeConfig } from "vite-plus";
+// 中身は @vitest/browser-playwright の再エクスポート。vite-plus では optional peer なので、
+// package.json の devDependencies に入れてある @vitest/browser-playwright を外さない
 import { playwright } from "vite-plus/test/browser-playwright";
 import viteConfig from "./vite.config.ts";
 
