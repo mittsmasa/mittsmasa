@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter @blog/ui watch & pnpm --filter main dev"
+    "dev": "vp run --filter @blog/ui --filter main --parallel dev"
   },
   "devDependencies": {
     "vite-plus": "^1.6.0"
