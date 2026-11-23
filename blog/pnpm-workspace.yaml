@@ -2,22 +2,21 @@ packages:
   - apps/*
   - packages/*
 
-# 公開から 7 日未満のバージョンは入れない（単位は分）
 minimumReleaseAge: 10080
 
-# install script は名指しで決める。@parcel/watcher は @pandacss/cli の依存。
-# 拒否したままで、ビルドと開発サーバーが動くことを確かめた。
-# esbuild は storybook の依存。バイナリはプラットフォーム別のパッケージで入り、
-# install script は無くても動く（拒否したままで Storybook の起動とテストを確かめた）
-# workerd は wrangler の依存。バイナリはプラットフォーム別のパッケージで入る。
-# install script は、そのパッケージが入らなかったときの取り直し
 allowBuilds:
   "@parcel/watcher": false
   esbuild: false
   workerd: false
 
-# Vite+ の指定どおり、vite と vitest を同梱の版に向ける。
-# 版は `pnpm exec vp toolchain vite-plus-core` と `pnpm exec vp toolchain vitest` の出力に合わせる
+pmOnFail: ignore
+runtimeOnFail: ignore
+
+peerDependencyRules:
+  allowedVersions:
+    vite: "1.6.0"
+    storybook>vite-plus: "1.6.0"
+
 overrides:
   "vite@*": "npm:@voidzero-dev/vite-plus-core@1.6.0"
   "vitest@*": "5.1.0"

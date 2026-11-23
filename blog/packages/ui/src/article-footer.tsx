@@ -5,7 +5,6 @@ type Props = {
   children: ReactNode;
 };
 
-/** 記事の下に、著者、前後の記事、一覧へのリンクを縦に並べる */
 export function ArticleFooter({ children }: Props) {
   return (
     <footer

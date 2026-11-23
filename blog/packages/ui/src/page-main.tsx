@@ -5,7 +5,6 @@ type Props = {
   children: ReactNode;
 };
 
-/** トップと一覧の `<main>`。子を縦に並べ、セクションの間をあける */
 export function PageMain({ children }: Props) {
   return (
     <main

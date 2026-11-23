@@ -6,12 +6,10 @@ function post(slug: string, date: string) {
   return { slug, title: `${slug} の題`, date, excerpt: `${slug} の抜粋` };
 }
 
-/** `heading` の見出しを持つ section の HTML。無ければ `undefined` */
 function sectionOf(html: string, heading: string): string | undefined {
   return html.split("<section").find((section) => section.includes(`>${heading}</h2>`));
 }
 
-// 新しい順
 const posts = [
   post("f", "2026-06-01"),
   post("e", "2026-05-01"),

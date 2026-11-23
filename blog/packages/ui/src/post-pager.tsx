@@ -6,9 +6,7 @@ type PagerLink = {
 };
 
 type Props = {
-  /** 1 つ新しい記事。「次の記事」として出す */
   newer?: PagerLink;
-  /** 1 つ古い記事。「前の記事」として出す */
   older?: PagerLink;
 };
 
@@ -17,7 +15,6 @@ const link = css({
   flexDirection: "column",
   gap: "pager.gap",
   textDecoration: "none",
-  // モバイルは 1 件ずつ線で区切る。PC は nav の上下の線だけ
   paddingBlock: "pager.itemPaddingBlock",
   borderBottom: { base: "default", md: "none" },
   md: { gridRow: 1 },
@@ -26,7 +23,6 @@ const link = css({
 const label = css({ textStyle: "label", color: "fg.muted" });
 const title = css({ textStyle: "subTitle" });
 
-/** 前後の記事へのリンク。モバイルは新しいほうを上に縦に並べ、PC は古いほうを左に 2 列で並べる */
 export function PostPager({ newer, older }: Props) {
   if (newer === undefined && older === undefined) {
     return null;

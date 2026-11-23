@@ -1,6 +1,5 @@
 node_modules
 dist
 styled-system
-# storybook-addon-vrt。基準画像（expected）だけをコミットする
-**/.vrt/*
-!**/.vrt/expected/
+# storybook-addon-vrt。基準画像も CI で base を撮って作るので、何もコミットしない
+**/.vrt/

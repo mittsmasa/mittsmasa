@@ -3,11 +3,9 @@ import { postListPath, postPath } from "../paths.ts";
 import type { PostMeta } from "../posts/index.ts";
 import { COPYRIGHT, SITE_LEAD, SITE_NAME } from "./site.ts";
 
-/** 「これまで」に並べる件数 */
 const RECENT_COUNT = 4;
 
 type Props = {
-  /** 新しい順に並んだ記事 */
   posts: readonly PostMeta[];
 };
 

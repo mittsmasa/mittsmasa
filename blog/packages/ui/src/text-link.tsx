@@ -6,7 +6,6 @@ type Props = {
   children: ReactNode;
 };
 
-/** 下線つきの小さいリンク。タップできる高さを 44px とる */
 export function TextLink({ href, children }: Props) {
   return (
     <a

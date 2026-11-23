@@ -5,7 +5,6 @@ import { TopPage } from "./pages/top-page.tsx";
 import { postListPath, topPath } from "./paths.ts";
 import { isPostListPath, renderPath, staticPaths } from "./routes.tsx";
 
-/** 公開している記事のパス。どの記事があるかは、テストでは決めない */
 const postPaths = staticPaths.filter((path) => path !== topPath && path !== postListPath);
 
 describe("renderPath", () => {
