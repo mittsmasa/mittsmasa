@@ -1,3 +1,6 @@
 node_modules
 dist
 styled-system
+# storybook-addon-vrt。基準画像（expected）だけをコミットする
+**/.vrt/*
+!**/.vrt/expected/

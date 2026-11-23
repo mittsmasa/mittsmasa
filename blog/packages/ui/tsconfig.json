@@ -13,5 +13,12 @@
     "skipLibCheck": true,
     "types": ["vite-plus/client"]
   },
-  "include": ["src", "styled-system", "panda.config.ts"]
+  "include": [
+    "src",
+    "styled-system",
+    ".storybook/*.ts",
+    "panda.config.ts",
+    "vite.config.ts",
+    "vitest.storybook.config.ts"
+  ]
 }

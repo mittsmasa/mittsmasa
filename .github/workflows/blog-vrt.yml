@@ -1,0 +1,62 @@
+# storybook-addon-vrt で、blog/packages/ui のストーリーのスクリーンショットを基準画像と比べる。
+#
+# 基準画像（blog/packages/ui/.vrt/expected）は、このジョブのコンテナで撮った画像だけを置く。
+# macOS と Linux では書体の描画が違うため、手元で撮った画像はコミットしない。
+#
+# 基準画像を作る、更新する手順:
+#   1. ストーリーを足したり見た目を変えたりすると、このジョブが added / changed で落ち、
+#      artifact `vrt-report` に .vrt が上がる（PR のコメントにも結果が出る）
+#   2. gh run download <run-id> -n vrt-report -D <dir>
+#   3. blog/packages/ui で pnpm exec svrt approve --actual-dir <dir>/actual
+#   4. .vrt/expected をコミットして push する
+name: blog VRT
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "blog/packages/ui/**"
+      - "blog/pnpm-lock.yaml"
+      - "blog/pnpm-workspace.yaml"
+      - ".github/workflows/blog-vrt.yml"
+  # main の必須チェックにしないので、paths で絞る
+  pull_request:
+    paths:
+      - "blog/packages/ui/**"
+      - "blog/pnpm-lock.yaml"
+      - "blog/pnpm-workspace.yaml"
+      - ".github/workflows/blog-vrt.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: blog-vrt-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vrt:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # 描画をそろえるため、イメージを digest で固定する。版は blog/packages/ui の playwright と合わせる
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.1-noble@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579
+    permissions:
+      contents: read
+      # 結果を PR にコメントする。fork からの PR ではトークンが読み取り専用になり、コメントだけ失敗する
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: voidzero-dev/setup-vp@cab1ab9eaff52d4857875f4f2c016e36af8f2c76 # v1.22.0
+        with:
+          working-directory: blog
+          cache: true
+          run-install: |
+            args: ["--frozen-lockfile"]
+      # svrt run（撮影と比較）→ PR へのコメント → 差があれば .vrt を artifact に上げる
+      - uses: k35o/storybook-addon-vrt@38c7b454862dd4bed704f9878c16450f9673a9a8 # v0 (storybook-addon-vrt@0.4.2)
+        with:
+          working-directory: blog/packages/ui
+          run-args: -- --config vitest.storybook.config.ts
