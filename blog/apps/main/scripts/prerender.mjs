@@ -25,6 +25,9 @@ for (const path of staticPaths) {
   const { head, body } = await renderToHtml(path).catch((error) => {
     throw new Error(`${path}: 描画できませんでした`, { cause: error });
   });
+  if (!head.includes("<title>")) {
+    throw new Error(`${path}: <title> がありません`);
+  }
 
   const file = join(clientDir, path === "/" ? "" : path.slice(1), "index.html");
   await mkdir(dirname(file), { recursive: true });

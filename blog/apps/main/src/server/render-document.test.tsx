@@ -57,6 +57,16 @@ describe("renderDocument", () => {
     expect(head + body).toBe(alone);
   });
 
+  // React は既定では、大きな Suspense の中身を #root の外（</body> の直前）に出して描く
+  test("Suspense の中身が大きくても、中身はすべて #root に入る", async () => {
+    const long = "あ".repeat(20_000);
+
+    const { body } = await renderDocument(<App data={Promise.resolve(long)} />);
+
+    expect(body).toContain(long);
+    expect(body).not.toContain("<template");
+  });
+
   test("Suspense の中でエラーが起きると reject する", async () => {
     // React の onError の既定と同じく console.error にも出すので、テストの出力から外す
     const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});

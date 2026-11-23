@@ -34,6 +34,9 @@ export async function renderDocument(node: ReactNode): Promise<RenderedDocument>
       createElement("body", null, createElement("div", { id: "root" }, node)),
     ),
     {
+      // 既定では、大きな Suspense の中身を #root の外（</body> の直前）に出し、スクリプトで差し込む。
+      // 静的 HTML では分ける必要が無いので、中身はその場に描かせる
+      progressiveChunkSize: Number.POSITIVE_INFINITY,
       onError(error) {
         errors.push(error);
         console.error(error);
