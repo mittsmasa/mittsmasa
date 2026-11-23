@@ -16,14 +16,14 @@
       "automerge": false
     },
     {
-      "description": "Playwright は npm の版と VRT のコンテナの版をそろえる。Chromium が変わると基準画像を撮り直すことがあるので、手動マージにする",
+      "description": "Playwright は npm の版と VRT のコンテナの版をそろえる。Chromium が変わると見た目が変わりうるので、VRT の PR コメントを見てから手動でマージする",
       "matchPackageNames": ["playwright", "mcr.microsoft.com/playwright"],
       "groupName": "playwright",
       "automerge": false
     },
     {
-      "description": "storybook-addon-vrt は CLI（npm）と GitHub Action の版をそろえる。Action は動くタグ v0 を追うので、片方だけ自動で上がらないよう手動マージにする",
-      "matchPackageNames": ["storybook-addon-vrt", "k35o/storybook-addon-vrt"],
+      "description": "storybook-addon-vrt は VRT の撮影と比較そのものなので、上げたときは VRT の結果を見てから手動でマージする",
+      "matchPackageNames": ["storybook-addon-vrt"],
       "groupName": "storybook-addon-vrt",
       "automerge": false
     }
