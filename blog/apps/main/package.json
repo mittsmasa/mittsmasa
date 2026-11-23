@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vp dev",
-    "build": "vp build --outDir dist/client && vp build --outDir dist/server --ssr src/entry-server.tsx && node scripts/prerender.mjs",
+    "build": "vp build --outDir dist/client && vp build --outDir dist/server --ssr src/entry-server.tsx && node scripts/prerender.ts",
     "preview": "vp preview --outDir dist/client"
   },
   "dependencies": {

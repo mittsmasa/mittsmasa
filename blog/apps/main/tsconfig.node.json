@@ -17,5 +17,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["build", "panda.config.ts", "vite.config.ts"]
+  "include": ["build", "scripts", "panda.config.ts", "vite.config.ts"]
 }
