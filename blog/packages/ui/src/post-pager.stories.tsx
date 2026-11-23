@@ -7,7 +7,6 @@ const older = { href: "/posts/older/", title: "自作ルーターの小さな作
 
 const meta = {
   component: PostPager,
-  // 自分では幅を持たない。記事の下のまとまりの中に置く
   decorators: [(Story) => <ArticleFooter>{Story()}</ArticleFooter>],
   args: { newer, older },
 } satisfies Meta<typeof PostPager>;
@@ -17,17 +16,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Both: Story = {};
 
-/** PC は古いほうを左に、2 列で並べる */
 export const BothPc: Story = {
   globals: { viewport: { value: "pc", isRotated: false } },
 };
 
-/** いちばん古い記事 */
 export const NewerOnly: Story = {
   args: { older: undefined },
 };
 
-/** いちばん新しい記事。PC でも右の列に寄らない */
 export const OlderOnlyPc: Story = {
   args: { newer: undefined },
   globals: { viewport: { value: "pc", isRotated: false } },

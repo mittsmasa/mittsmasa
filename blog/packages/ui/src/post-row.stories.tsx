@@ -4,7 +4,6 @@ import { PostRow } from "./post-row.tsx";
 
 const meta = {
   component: PostRow,
-  // 自分では幅を持たない。一覧の <main> の中に置く
   decorators: [(Story) => <PageMain>{Story()}</PageMain>],
   args: {
     href: "/posts/hello-world/",
@@ -23,7 +22,6 @@ export const FullPc: Story = {
   globals: { viewport: { value: "pc", isRotated: false } },
 };
 
-/** 年で区切った一覧の中では、年を省く */
 export const MonthDay: Story = {
   args: { dateStyle: "monthDay" },
 };
@@ -33,7 +31,6 @@ export const MonthDayPc: Story = {
   globals: { viewport: { value: "pc", isRotated: false } },
 };
 
-/** 題が折り返すとき、日付の列がずれない */
 export const LongTitlePc: Story = {
   args: {
     title:

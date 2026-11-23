@@ -15,7 +15,6 @@ export const DefaultPc: Story = {
   globals: { viewport: { value: "pc", isRotated: false } },
 };
 
-/** 一覧のページでは、一覧へのリンクを出さない */
 export const WithoutListLink: Story = {
   args: { listHref: undefined },
 };

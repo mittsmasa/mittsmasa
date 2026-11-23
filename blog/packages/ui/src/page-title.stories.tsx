@@ -4,7 +4,6 @@ import { PageTitle } from "./page-title.tsx";
 
 const meta = {
   component: PageTitle,
-  // 自分では幅を持たない。一覧の <main> の中に置く
   decorators: [(Story) => <PageMain>{Story()}</PageMain>],
   args: { children: "Storybook とビジュアルリグレッションテストを入れた話" },
 } satisfies Meta<typeof PageTitle>;

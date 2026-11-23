@@ -6,7 +6,6 @@ import { TextLink } from "./text-link.tsx";
 
 const meta = {
   component: Section,
-  // 自分では幅を持たない。トップの <main> の中に置く
   decorators: [(Story) => <PageMain>{Story()}</PageMain>],
   args: {
     heading: "これまで",

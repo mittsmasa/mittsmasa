@@ -4,14 +4,6 @@ import { parseFrontmatter } from "../src/posts/frontmatter.ts";
 import { toPostHtml } from "../src/posts/html.ts";
 import { toPostFrontmatter, type PostMetaSource } from "../src/posts/post.ts";
 
-/**
- * Markdown の記事を、ビルドのときに 2 通りのモジュールへ変換する。
- *
- * - `*.md?meta`: frontmatter の `{ title, date }` と、本文から作った抜粋 `excerpt`
- * - `*.md?body`: 本文を変換した HTML の文字列
- *
- * 一覧に要る情報と本文を別のモジュールにして、本文だけを後から読み込めるようにする。
- */
 export function postsPlugin(): Plugin {
   return {
     name: "blog-posts",

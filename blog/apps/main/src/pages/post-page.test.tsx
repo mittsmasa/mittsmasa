@@ -7,13 +7,11 @@ function post(slug: string) {
   return { slug, title: `${slug} の題`, date: "2026-11-22", excerpt: "" };
 }
 
-/** 本文を `use` で待つので、待ち終えてから HTML にする */
 async function render(element: ReactElement): Promise<string> {
   const { prelude } = await prerender(element);
   return new Response(prelude).text();
 }
 
-/** `label` を含むリンクの開始タグから終了タグまで。無ければ `undefined` */
 function linkOf(html: string, label: string): string | undefined {
   return html
     .split("<a ")

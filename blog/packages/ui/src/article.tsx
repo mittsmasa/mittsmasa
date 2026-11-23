@@ -3,21 +3,17 @@ import { formatDate } from "./format-date.ts";
 import { PageTitle } from "./page-title.tsx";
 
 type Props = {
-  /** `YYYY-MM-DD` */
   date: string;
   title: string;
-  /** 本文の HTML。信頼できる出どころのものだけを渡す。無害化はしない */
   html: string;
 };
 
-// 本文は Markdown から出た HTML で、要素にクラスを付けられない。要素を名指しして組む
 const prose = css({
   display: "flex",
   flexDirection: "column",
   gap: "prose.gap",
   "& p, & ul, & ol, & blockquote": { margin: "none" },
   "& h2": {
-    // 上の段落との間を広げ、下の段落との間を詰める
     marginTop: "prose.h2Top",
     marginBottom: "-prose.headingPull",
     paddingTop: "prose.h2PaddingTop",
@@ -39,7 +35,6 @@ const prose = css({
   "& a": { textDecoration: "underline" },
   "& strong": { fontWeight: "emphasis" },
   "& pre": {
-    // 左右の余白を打ち消して、端まで広げる
     marginBlock: "prose.preMargin",
     marginInline: "-gutter",
     paddingBlock: "prose.prePadding",
@@ -59,14 +54,12 @@ const prose = css({
   "& img": {
     display: "block",
     height: "auto",
-    // モバイルは左右の余白を打ち消して端まで、PC は本文の幅
     width: "proseImage",
     maxWidth: "none",
     marginInline: { base: "-gutter", md: "none" },
   },
 });
 
-/** 記事の日付、題、本文 */
 export function Article({ date, title, html }: Props) {
   return (
     <article

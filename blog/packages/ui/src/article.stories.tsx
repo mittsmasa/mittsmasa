@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Article } from "./article.tsx";
 
-// Article の CSS は、Markdown から出た HTML の要素ごとに見た目を持つ。使う要素を一通り並べる
 const html = `
 <p>長く使っていたブログの仕組みを、Vite と React で作り直しました。記事は <strong>Markdown のまま</strong>で、ページはビルドのときに HTML に書き出します。</p>
 <h2>作り直した理由</h2>

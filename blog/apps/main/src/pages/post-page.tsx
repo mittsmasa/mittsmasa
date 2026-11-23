@@ -6,11 +6,8 @@ import { AUTHOR_NAME, SITE_NAME } from "./site.ts";
 
 type Props = {
   post: PostMeta;
-  /** 本文の HTML。届くまで、いちばん近い Suspense が待つ */
   body: Promise<string>;
-  /** 1 つ新しい記事 */
   newer?: PostMeta;
-  /** 1 つ古い記事 */
   older?: PostMeta;
 };
 
@@ -24,7 +21,6 @@ export function PostPage({ post, body, newer, older }: Props) {
     <>
       <title>{`${post.title} | ${SITE_NAME}`}</title>
       <main>
-        {/* html はリポジトリ内の Markdown を変換したもの。外部からの入力は通らない */}
         <Article date={post.date} title={post.title} html={html} />
       </main>
       <ArticleFooter>

@@ -4,7 +4,6 @@ import { AuthorNote } from "./author-note.tsx";
 import { PostPager } from "./post-pager.tsx";
 import { TextLink } from "./text-link.tsx";
 
-/** 記事ページの下と同じ並び。まとまりの間の余白を見る */
 const meta = {
   component: ArticleFooter,
   args: {

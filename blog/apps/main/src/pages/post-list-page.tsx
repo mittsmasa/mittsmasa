@@ -5,7 +5,6 @@ import type { PostMeta } from "../posts/index.ts";
 import { COPYRIGHT, SITE_LEAD, SITE_NAME } from "./site.ts";
 
 type Props = {
-  /** 新しい順に並んだ記事 */
   posts: readonly PostMeta[];
 };
 

@@ -5,13 +5,6 @@ import { renderPath } from "./routes.tsx";
 
 export { staticPaths } from "./routes.tsx";
 
-/**
- * 指定したパスのページを HTML の文字列にする。
- *
- * @param path URL の pathname
- * @returns `#root` の中に入れる HTML
- * @throws パスに当たるページが無いとき。Not Found の HTML を黙って書き出さないため
- */
 export async function renderToHtml(path: string): Promise<string> {
   if (renderPath(path) === undefined) {
     throw new Error(`${path}: 当たるページがありません`);

@@ -4,7 +4,6 @@ import { PageMain } from "./page-main.tsx";
 
 const meta = {
   component: FeaturedPost,
-  // 自分では幅を持たない。トップの <main> の中に置く
   decorators: [(Story) => <PageMain>{Story()}</PageMain>],
   args: {
     href: "/posts/hello-world/",
