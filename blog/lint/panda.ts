@@ -5,8 +5,22 @@ import { definePlugin, defineRule, type ESTree } from "vite-plus/lint/plugins";
 const ESCAPE_HATCHES = [
   { pattern: /^\[[\s\S]*\]$/, name: "[...] の任意の値" },
   { pattern: /!(important)?$/, name: "末尾の ! / !important" },
-  { pattern: /^[A-Za-z][\w.-]*\/\d+$/, name: "token/数字 の透明度指定" },
+  // 型は `${token}/${string}` で、/ の後ろに数字以外（[0.5] など）も通す
+  { pattern: /^[A-Za-z][\w.-]*\/.+$/, name: "token/... の透明度指定" },
 ];
+
+// 三項演算子や || の枝にある値も、その式全体が置かれた位置で判定する
+function valuePosition(node: ESTree.Node): ESTree.Node {
+  let current = node;
+  while (
+    current.parent?.type === "ConditionalExpression" ||
+    current.parent?.type === "LogicalExpression"
+  ) {
+    if (current.parent.type === "ConditionalExpression" && current.parent.test === current) break;
+    current = current.parent;
+  }
+  return current;
+}
 
 const noEscapeHatch = defineRule({
   meta: {
@@ -17,10 +31,11 @@ const noEscapeHatch = defineRule({
   },
   create(context) {
     function check(node: ESTree.Node, value: string) {
-      const parent = node.parent;
+      const position = valuePosition(node);
+      const parent = position.parent;
       // 値の位置だけを見る。キーには条件やセレクタ（"&:hover" など）が来る
       const isValue =
-        (parent?.type === "Property" && parent.value === node) ||
+        (parent?.type === "Property" && parent.value === position) ||
         parent?.type === "ArrayExpression";
       if (!isValue) return;
       const hit = ESCAPE_HATCHES.find(({ pattern }) => pattern.test(value));
