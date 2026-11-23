@@ -195,6 +195,9 @@ importers:
         specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
     devDependencies:
+      '@pandacss/dev':
+        specifier: 2.5.0
+        version: 2.5.0(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(postcss@8.5.33)
       '@pandacss/vite':
         specifier: 2.5.0
         version: 2.5.0(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@voidzero-dev/vite-plus-core@1.6.0)
