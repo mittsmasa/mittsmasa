@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vite-plus/test";
-import { Section } from "./Section.tsx";
+import { Section } from "./section.tsx";
 
 describe("Section", () => {
   test("section の名前が見出しになるよう、aria-labelledby で見出しを指す", () => {

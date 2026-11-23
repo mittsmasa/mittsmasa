@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { transitionTypeOf } from "./transitionType.ts";
+import { transitionTypeOf } from "./transition-type.ts";
 
 describe("transitionTypeOf", () => {
   test("新しい履歴に進む遷移は navigation-push", () => {

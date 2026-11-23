@@ -1,6 +1,6 @@
 import { css } from "../styled-system/css";
-import { formatDate } from "./formatDate.ts";
-import { PageTitle } from "./PageTitle.tsx";
+import { formatDate } from "./format-date.ts";
+import { PageTitle } from "./page-title.tsx";
 
 type Props = {
   /** `YYYY-MM-DD` */

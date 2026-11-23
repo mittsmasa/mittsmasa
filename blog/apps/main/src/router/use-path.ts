@@ -6,7 +6,7 @@ import {
   useState,
   useTransition,
 } from "react";
-import { transitionTypeOf } from "./transitionType.ts";
+import { transitionTypeOf } from "./transition-type.ts";
 
 /** ルーターの現在の状態 */
 export type RouterState = {

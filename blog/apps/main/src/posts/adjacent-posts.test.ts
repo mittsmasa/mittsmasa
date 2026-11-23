@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { adjacentPosts } from "./adjacentPosts.ts";
+import { adjacentPosts } from "./adjacent-posts.ts";
 
 // 新しい順
 const posts = [{ slug: "c" }, { slug: "b" }, { slug: "a" }];

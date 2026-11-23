@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vite-plus/test";
-import { SiteHeader } from "./SiteHeader.tsx";
+import { SiteHeader } from "./site-header.tsx";
 
 describe("SiteHeader", () => {
   test("サイト名をトップへのリンクにする", () => {

@@ -1,6 +1,6 @@
 import { Lead, PageMain, PostRow, Section, SiteFooter } from "@blog/ui";
 import { postPath } from "../paths.ts";
-import { groupByYear } from "../posts/groupByYear.ts";
+import { groupByYear } from "../posts/group-by-year.ts";
 import type { PostMeta } from "../posts/index.ts";
 import { COPYRIGHT, SITE_LEAD, SITE_NAME } from "./site.ts";
 

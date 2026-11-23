@@ -1,4 +1,4 @@
-import { createBodyCache } from "./bodyCache.ts";
+import { createBodyCache } from "./body-cache.ts";
 import { slugOf, toPosts, type PostMeta, type PostMetaSource } from "./post.ts";
 
 export type { PostMeta };

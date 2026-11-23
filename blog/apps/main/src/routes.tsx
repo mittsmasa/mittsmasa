@@ -1,9 +1,9 @@
 import type { ReactElement } from "react";
-import { PostListPage } from "./pages/PostListPage.tsx";
-import { PostPage } from "./pages/PostPage.tsx";
-import { TopPage } from "./pages/TopPage.tsx";
+import { PostListPage } from "./pages/post-list-page.tsx";
+import { PostPage } from "./pages/post-page.tsx";
+import { TopPage } from "./pages/top-page.tsx";
 import { postListPath, postListPattern, postPath, postPattern, topPath } from "./paths.ts";
-import { adjacentPosts } from "./posts/adjacentPosts.ts";
+import { adjacentPosts } from "./posts/adjacent-posts.ts";
 import { findPost, loadPostBody, posts } from "./posts/index.ts";
 import { matchRoute, type RouteParams } from "./router/index.ts";
 

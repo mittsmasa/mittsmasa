@@ -10,5 +10,9 @@ export default defineConfig({
       typeAware: true,
       typeCheck: true,
     },
+    rules: {
+      // ファイル名はケバブケースにそろえる
+      "unicorn/filename-case": ["error", { case: "kebabCase" }],
+    },
   },
 });

@@ -1,5 +1,5 @@
 import { css } from "../styled-system/css";
-import { formatDate, type DateStyle } from "./formatDate.ts";
+import { formatDate, type DateStyle } from "./format-date.ts";
 
 type Props = {
   href: string;
