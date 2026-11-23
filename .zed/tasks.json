@@ -1,8 +1,17 @@
 [
   {
     "label": "ブログ: 画像をアップロード",
-    "command": "node",
-    "args": ["apps/main/scripts/upload-image.ts", "$ZED_STEM"],
+    "command": "fnox",
+    "args": [
+      "-P",
+      "blog-images",
+      "--no-defaults",
+      "exec",
+      "--",
+      "node",
+      "apps/main/scripts/upload-image.ts",
+      "$ZED_STEM"
+    ],
     "cwd": "$ZED_WORKTREE_ROOT/blog",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
