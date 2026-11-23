@@ -8,10 +8,14 @@
     "preview": "vp preview --outDir dist/client"
   },
   "dependencies": {
+    "@blog/ui": "workspace:*",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@pandacss/dev": "2.5.0",
+    "@pandacss/preset-base": "2.5.0",
+    "@pandacss/vite": "2.5.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.3.0",

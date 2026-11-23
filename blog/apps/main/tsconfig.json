@@ -13,5 +13,5 @@
     "skipLibCheck": true,
     "types": ["vite-plus/client"]
   },
-  "include": ["src", "build", "vite.config.ts"]
+  "include": ["src", "build", "panda.config.ts", "vite.config.ts"]
 }

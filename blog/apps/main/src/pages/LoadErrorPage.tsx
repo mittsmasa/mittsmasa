@@ -1,3 +1,4 @@
+import { Lead, PageMain, PageTitle, TextLink } from "@blog/ui";
 import { SITE_NAME } from "./site.ts";
 
 type Props = {
@@ -9,13 +10,13 @@ export function LoadErrorPage({ path }: Props) {
   return (
     <>
       <title>{`表示できませんでした | ${SITE_NAME}`}</title>
-      <h1>表示できませんでした</h1>
-      <p>ページの読み込みに失敗しました。通信の状態を確かめて、もう一度試してください。</p>
-      <p>
+      <PageMain>
+        <PageTitle>表示できませんでした</PageTitle>
+        <Lead>ページの読み込みに失敗しました。通信の状態を確かめて、もう一度試してください。</Lead>
         {/* 今と同じパスへの遷移。ルーターが受け取り、失敗した読み込みをやり直す */}
-        <a href={path}>もう一度読み込む</a>
-      </p>
-      <p>それでも表示されないときは、ブラウザでページを再読み込みしてください。</p>
+        <TextLink href={path}>もう一度読み込む</TextLink>
+        <Lead>それでも表示されないときは、ブラウザでページを再読み込みしてください。</Lead>
+      </PageMain>
     </>
   );
 }

@@ -5,6 +5,11 @@ packages:
 # 公開から 7 日未満のバージョンは入れない（単位は分）
 minimumReleaseAge: 10080
 
+# install script は名指しで決める。@parcel/watcher は @pandacss/cli の依存。
+# 拒否したままで、ビルドと開発サーバーが動くことを確かめた
+allowBuilds:
+  "@parcel/watcher": false
+
 # Vite+ の指定どおり、vite と vitest を同梱の版に向ける。
 # 版は `pnpm exec vp toolchain vite-plus-core` と `pnpm exec vp toolchain vitest` の出力に合わせる
 overrides:

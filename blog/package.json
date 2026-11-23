@@ -2,6 +2,9 @@
   "name": "blog",
   "private": true,
   "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @blog/ui watch & pnpm --filter main dev"
+  },
   "devDependencies": {
     "vite-plus": "^1.6.0"
   },

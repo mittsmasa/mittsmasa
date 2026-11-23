@@ -1,14 +1,15 @@
-import { postListPath } from "../paths.ts";
+import { PageMain, PageTitle, TextLink } from "@blog/ui";
+import { topPath } from "../paths.ts";
 import { SITE_NAME } from "./site.ts";
 
 export function NotFoundPage() {
   return (
     <>
-      <title>{`Not Found | ${SITE_NAME}`}</title>
-      <h1>Not Found</h1>
-      <p>
-        <a href={postListPath}>記事の一覧へ</a>
-      </p>
+      <title>{`ページが見つかりません | ${SITE_NAME}`}</title>
+      <PageMain>
+        <PageTitle>ページが見つかりません</PageTitle>
+        <TextLink href={topPath}>トップへ</TextLink>
+      </PageMain>
     </>
   );
 }

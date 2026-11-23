@@ -1,7 +1,9 @@
 import type { ReactElement } from "react";
 import { PostListPage } from "./pages/PostListPage.tsx";
 import { PostPage } from "./pages/PostPage.tsx";
-import { postListPath, postPath, postPattern } from "./paths.ts";
+import { TopPage } from "./pages/TopPage.tsx";
+import { postListPath, postListPattern, postPath, postPattern, topPath } from "./paths.ts";
+import { adjacentPosts } from "./posts/adjacentPosts.ts";
 import { findPost, loadPostBody, posts } from "./posts/index.ts";
 import { matchRoute, type RouteParams } from "./router/index.ts";
 
@@ -14,14 +16,26 @@ type AppRoute = {
 
 const routes: readonly AppRoute[] = [
   {
-    pattern: postListPath,
+    pattern: topPath,
+    render: () => <TopPage posts={posts} />,
+  },
+  {
+    pattern: postListPattern,
     render: () => <PostListPage posts={posts} />,
   },
   {
     pattern: postPattern,
     render: ({ slug }) => {
       const post = slug === undefined ? undefined : findPost(slug);
-      return post && <PostPage post={post} body={loadPostBody(post.slug)} />;
+      return (
+        post && (
+          <PostPage
+            post={post}
+            body={loadPostBody(post.slug)}
+            {...adjacentPosts(posts, post.slug)}
+          />
+        )
+      );
     },
   },
 ];
@@ -37,8 +51,14 @@ export function renderPath(path: string): ReactElement | undefined {
   return matched?.route.render(matched.params);
 }
 
+/** 一覧ページのパスか。末尾の `/` の有無は区別しない */
+export function isPostListPath(path: string): boolean {
+  return matchRoute([{ pattern: postListPattern }], path) !== undefined;
+}
+
 /** 静的 HTML として書き出すパスの一覧 */
 export const staticPaths: readonly string[] = [
+  topPath,
   postListPath,
   ...posts.map((post) => postPath(post.slug)),
 ];

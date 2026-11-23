@@ -1,11 +1,11 @@
 import { createBodyCache } from "./bodyCache.ts";
-import { slugOf, toPosts, type PostFrontmatter, type PostMeta } from "./post.ts";
+import { slugOf, toPosts, type PostMeta, type PostMetaSource } from "./post.ts";
 
 export type { PostMeta };
 
 // 読むのは content/posts だけ。下書きを置く content/drafts は対象に入れない。
 // ?meta と ?body は build/postsPlugin.ts が作る
-const frontmatters = import.meta.glob<PostFrontmatter>("../../../../content/posts/*.md", {
+const metaSources = import.meta.glob<PostMetaSource>("../../../../content/posts/*.md", {
   query: "?meta",
   import: "default",
   eager: true,
@@ -17,7 +17,7 @@ const bodyLoaders = import.meta.glob<string>("../../../../content/posts/*.md", {
 });
 
 /** 公開している記事。新しい順 */
-export const posts: PostMeta[] = toPosts(frontmatters);
+export const posts: PostMeta[] = toPosts(metaSources);
 
 export function findPost(slug: string): PostMeta | undefined {
   return posts.find((post) => post.slug === slug);
