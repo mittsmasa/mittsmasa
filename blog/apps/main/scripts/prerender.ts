@@ -8,7 +8,12 @@ const BODY_PLACEHOLDER = "<!--app-html-->";
 const dist = join(import.meta.dirname, "..", "dist");
 const clientDir = join(dist, "client");
 
-const { renderToHtml, staticPaths } = await import(
+type EntryServer = {
+  renderToHtml: (path: string) => Promise<{ head: string; body: string }>;
+  staticPaths: readonly string[];
+};
+
+const { renderToHtml, staticPaths }: EntryServer = await import(
   pathToFileURL(join(dist, "server", "entry-server.js")).href
 );
 
