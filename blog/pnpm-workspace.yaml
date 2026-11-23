@@ -9,6 +9,14 @@ allowBuilds:
   esbuild: false
   workerd: false
 
+pmOnFail: ignore
+runtimeOnFail: ignore
+
+peerDependencyRules:
+  allowedVersions:
+    vite: "1.6.0"
+    storybook>vite-plus: "1.6.0"
+
 overrides:
   "vite@*": "npm:@voidzero-dev/vite-plus-core@1.6.0"
   "vitest@*": "5.1.0"
