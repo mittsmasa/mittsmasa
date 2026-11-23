@@ -7,25 +7,28 @@ import { toPostFrontmatter, type PostMetaSource } from "../src/posts/post.ts";
 export function postsPlugin(): Plugin {
   return {
     name: "blog-posts",
-    transform(code, id) {
-      const [file = "", query = ""] = id.split("?");
-      if (!file.endsWith(".md")) return undefined;
+    transform: {
+      filter: { id: /\.md\?/ },
+      handler(code, id) {
+        const [file = "", query = ""] = id.split("?");
+        if (!file.endsWith(".md")) return undefined;
 
-      const params = new URLSearchParams(query);
-      if (params.has("meta")) {
-        const name = file.slice(file.lastIndexOf("/") + 1);
-        const { fields, body } = parseFrontmatter(code);
-        const meta: PostMetaSource = {
-          ...toPostFrontmatter(name, fields),
-          excerpt: toExcerpt(body),
-        };
-        return { code: `export default ${JSON.stringify(meta)};`, map: null };
-      }
-      if (params.has("body")) {
-        const html = toPostHtml(parseFrontmatter(code).body);
-        return { code: `export default ${JSON.stringify(html)};`, map: null };
-      }
-      return undefined;
+        const params = new URLSearchParams(query);
+        if (params.has("meta")) {
+          const name = file.slice(file.lastIndexOf("/") + 1);
+          const { fields, body } = parseFrontmatter(code);
+          const meta: PostMetaSource = {
+            ...toPostFrontmatter(name, fields),
+            excerpt: toExcerpt(body),
+          };
+          return { code: `export default ${JSON.stringify(meta)};`, map: null, moduleType: "js" };
+        }
+        if (params.has("body")) {
+          const html = toPostHtml(parseFrontmatter(code).body);
+          return { code: `export default ${JSON.stringify(html)};`, map: null, moduleType: "js" };
+        }
+        return undefined;
+      },
     },
   };
 }
