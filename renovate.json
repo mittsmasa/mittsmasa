@@ -26,6 +26,11 @@
       "matchPackageNames": ["storybook-addon-vrt", "k35o/storybook-addon-vrt"],
       "groupName": "storybook-addon-vrt",
       "automerge": false
+    },
+    {
+      "description": "wrangler は main へのマージで、Cloudflare の API トークンを持つ deploy ジョブが実行する。人の確認なしに本番へ届かないよう、手動マージにする",
+      "matchPackageNames": ["wrangler"],
+      "automerge": false
     }
   ]
 }
