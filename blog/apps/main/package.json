@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "vp dev",
     "build": "vp build --outDir dist/client && vp build --outDir dist/server --ssr src/entry-server.tsx && node scripts/prerender.mjs",
-    "preview": "vp preview --outDir dist/client",
-    "deploy": "wrangler deploy"
+    "preview": "vp preview --outDir dist/client"
   },
   "dependencies": {
     "@blog/ui": "workspace:*",
