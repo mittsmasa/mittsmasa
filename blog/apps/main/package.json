@@ -14,7 +14,6 @@
   },
   "devDependencies": {
     "@pandacss/dev": "2.5.0",
-    "@pandacss/preset-base": "2.5.0",
     "@pandacss/vite": "2.5.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

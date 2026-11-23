@@ -198,9 +198,6 @@ importers:
       '@pandacss/dev':
         specifier: 2.5.0
         version: 2.5.0(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.3)(postcss@8.5.33)
-      '@pandacss/preset-base':
-        specifier: 2.5.0
-        version: 2.5.0
       '@pandacss/vite':
         specifier: 2.5.0
         version: 2.5.0(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.3)(@voidzero-dev/vite-plus-core@1.6.0(esbuild@0.28.2)(typescript@7.0.2))
@@ -3172,7 +3169,6 @@ snapshots:
   '@emnapi/runtime@1.11.0':
     dependencies:
       tslib: 2.9.1
-    optional: true
 
   '@emnapi/runtime@1.11.3':
     dependencies:
@@ -3417,7 +3413,6 @@ snapshots:
       '@emnapi/core': 1.11.0
       '@emnapi/runtime': 1.11.0
       '@tybys/wasm-util': 0.10.4
-    optional: true
 
   '@napi-rs/wasm-runtime@1.2.7(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.3)':
     dependencies:
