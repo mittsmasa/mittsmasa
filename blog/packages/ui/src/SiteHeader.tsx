@@ -13,7 +13,7 @@ type Props = {
 const headerLink = css({
   display: "flex",
   alignItems: "center",
-  height: "44px",
+  height: "tapTarget",
   textDecoration: "none",
 });
 
@@ -24,7 +24,7 @@ export function SiteHeader({ siteName, topHref, listHref, loading = false }: Pro
         // 線は、モバイルでは本文の幅、PC では画面の幅いっぱい
         maxWidth: { base: "content", md: "none" },
         marginInline: "auto",
-        borderBottom: "1px solid token(colors.fg)",
+        borderBottom: "strong",
       })}
     >
       <div
@@ -32,29 +32,24 @@ export function SiteHeader({ siteName, topHref, listHref, loading = false }: Pro
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          height: { base: "52px", md: "56px" },
+          height: "header",
           maxWidth: "content",
           marginInline: "auto",
           paddingInline: "gutter",
         })}
       >
-        <a
-          href={topHref}
-          className={`${headerLink} ${css({ fontSize: "15px", fontWeight: 500, letterSpacing: "0.04em" })}`}
-        >
+        <a href={topHref} className={`${headerLink} ${css({ textStyle: "siteName" })}`}>
           {siteName}
         </a>
         {/* 読み上げソフトに変化が伝わるよう、要素は常に置いて中身だけを入れ替える */}
         <p
           role="status"
           className={css({
-            margin: 0,
-            marginLeft: "16px",
+            margin: "none",
+            marginLeft: "header.gap",
             marginRight: "auto",
-            fontSize: "12px",
-            lineHeight: "20px",
-            letterSpacing: "0.08em",
-            color: "fgMuted",
+            textStyle: "label",
+            color: "fg.muted",
           })}
         >
           {loading ? "読み込み中…" : ""}
@@ -62,7 +57,7 @@ export function SiteHeader({ siteName, topHref, listHref, loading = false }: Pro
         {listHref !== undefined && (
           <a
             href={listHref}
-            className={`${headerLink} ${css({ paddingLeft: "16px", textStyle: "smallLink" })}`}
+            className={`${headerLink} ${css({ paddingLeft: "header.gap", textStyle: "smallLink" })}`}
           >
             一覧
           </a>

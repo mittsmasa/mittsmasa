@@ -14,54 +14,55 @@ type Props = {
 const prose = css({
   display: "flex",
   flexDirection: "column",
-  gap: { base: "20px", md: "22px" },
-  lineHeight: { base: 1.75, md: 1.8 },
-  "& p, & ul, & ol, & blockquote": { margin: 0 },
+  gap: "prose.gap",
+  "& p, & ul, & ol, & blockquote": { margin: "none" },
   "& h2": {
     // 上の段落との間を広げ、下の段落との間を詰める
-    margin: { base: "12px 0 -6px", md: "18px 0 -6px" },
-    paddingTop: { base: "20px", md: "24px" },
-    borderTop: "1px solid token(colors.line)",
-    fontSize: { base: "19px", md: "22px" },
-    lineHeight: { base: "30px", md: "34px" },
-    fontWeight: 500,
+    marginTop: "prose.h2Top",
+    marginBottom: "-prose.headingPull",
+    paddingTop: "prose.h2PaddingTop",
+    borderTop: "default",
+    textStyle: "heading2",
   },
   "& h3": {
-    margin: "8px 0 -6px",
-    fontSize: { base: "17px", md: "19px" },
-    lineHeight: { base: "28px", md: "30px" },
-    fontWeight: 500,
+    marginTop: "prose.h3Top",
+    marginBottom: "-prose.headingPull",
+    textStyle: "heading3",
   },
-  "& ul, & ol": { paddingLeft: "1.5em" },
-  "& li + li": { marginTop: "8px" },
+  "& ul, & ol": { paddingLeft: "prose.listIndent" },
+  "& li + li": { marginTop: "prose.listGap" },
   "& blockquote": {
-    paddingLeft: "16px",
-    borderLeft: "2px solid token(colors.line)",
-    color: "fgMuted",
+    paddingLeft: "prose.quoteIndent",
+    borderLeft: "quote",
+    color: "fg.muted",
   },
   "& a": { textDecoration: "underline" },
-  "& strong": { fontWeight: 500 },
+  "& strong": { fontWeight: "emphasis" },
   "& pre": {
     // 左右の余白を打ち消して、端まで広げる
-    marginBlock: { base: "4px", md: "6px" },
+    marginBlock: "prose.preMargin",
     marginInline: "-gutter",
-    paddingBlock: { base: "16px", md: "20px" },
+    paddingBlock: "prose.prePadding",
     paddingInline: "gutter",
     overflowX: "auto",
-    background: "codeBg",
+    background: "bg.code",
     fontFamily: "mono",
-    fontSize: { base: "13px", md: "14px" },
-    lineHeight: { base: "21px", md: "23px" },
+    textStyle: "code",
   },
   "& code": { fontFamily: "mono" },
-  "& :not(pre) > code": { padding: "2px 4px", background: "codeBg", fontSize: "0.9em" },
+  "& :not(pre) > code": {
+    paddingBlock: "prose.inlineCodeY",
+    paddingInline: "prose.inlineCodeX",
+    background: "bg.code",
+    textStyle: "inlineCode",
+  },
   "& img": {
     display: "block",
     height: "auto",
     // モバイルは左右の余白を打ち消して端まで、PC は本文の幅
-    width: { base: "calc(100% + token(spacing.gutter) * 2)", md: "100%" },
+    width: "proseImage",
     maxWidth: "none",
-    marginInline: { base: "-gutter", md: "0" },
+    marginInline: { base: "-gutter", md: "none" },
   },
 });
 
@@ -73,19 +74,19 @@ export function Article({ date, title, html }: Props) {
         maxWidth: "content",
         marginInline: "auto",
         paddingInline: "gutter",
-        paddingTop: { base: "28px", md: "56px" },
-        fontSize: { base: "16px", md: "17px" },
+        paddingTop: "article.top",
+        textStyle: "body",
       })}
     >
       <div
         className={css({
           display: "flex",
           flexDirection: "column",
-          gap: { base: "8px", md: "10px" },
-          marginBottom: { base: "28px", md: "40px" },
+          gap: "article.headerGap",
+          marginBottom: "article.headerBottom",
         })}
       >
-        <time dateTime={date} className={css({ textStyle: "meta", color: "fgMuted" })}>
+        <time dateTime={date} className={css({ textStyle: "meta", color: "fg.muted" })}>
           {formatDate(date, "full")}
         </time>
         <PageTitle>{title}</PageTitle>

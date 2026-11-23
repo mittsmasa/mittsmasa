@@ -12,12 +12,12 @@ export function ArticleFooter({ children }: Props) {
       className={css({
         display: "flex",
         flexDirection: "column",
-        gap: { base: "32px", md: "40px" },
+        gap: "footer.gap",
         maxWidth: "content",
         marginInline: "auto",
         paddingInline: "gutter",
-        paddingTop: { base: "44px", md: "64px" },
-        paddingBottom: { base: "40px", md: "56px" },
+        paddingTop: "footer.top",
+        paddingBottom: "footer.bottom",
       })}
     >
       {children}

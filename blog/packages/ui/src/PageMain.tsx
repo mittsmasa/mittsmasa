@@ -12,11 +12,11 @@ export function PageMain({ children }: Props) {
       className={css({
         display: "flex",
         flexDirection: "column",
-        gap: { base: "40px", md: "48px" },
+        gap: "page.gap",
         maxWidth: "content",
         marginInline: "auto",
         paddingInline: "gutter",
-        paddingTop: { base: "28px", md: "48px" },
+        paddingTop: "page.top",
       })}
     >
       {children}

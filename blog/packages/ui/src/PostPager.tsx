@@ -15,16 +15,16 @@ type Props = {
 const link = css({
   display: "flex",
   flexDirection: "column",
-  gap: "2px",
+  gap: "pager.gap",
   textDecoration: "none",
   // モバイルは 1 件ずつ線で区切る。PC は nav の上下の線だけ
-  paddingBlock: { base: "12px", md: "0" },
-  borderBottom: { base: "1px solid token(colors.line)", md: "none" },
+  paddingBlock: "pager.itemPaddingBlock",
+  borderBottom: { base: "default", md: "none" },
   md: { gridRow: 1 },
 });
 
-const label = css({ textStyle: "label", color: "fgMuted" });
-const title = css({ fontSize: "15px", lineHeight: "24px" });
+const label = css({ textStyle: "label", color: "fg.muted" });
+const title = css({ textStyle: "subTitle" });
 
 /** 前後の記事へのリンク。モバイルは新しいほうを上に縦に並べ、PC は古いほうを左に 2 列で並べる */
 export function PostPager({ newer, older }: Props) {
@@ -37,12 +37,12 @@ export function PostPager({ newer, older }: Props) {
       className={css({
         display: { base: "flex", md: "grid" },
         flexDirection: "column",
-        borderTop: "1px solid token(colors.line)",
+        borderTop: "default",
         md: {
           gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-          gap: "24px",
-          paddingBlock: "16px",
-          borderBottom: "1px solid token(colors.line)",
+          gap: "pager.columnGap",
+          paddingBlock: "pager.paddingBlock",
+          borderBottom: "default",
         },
       })}
     >

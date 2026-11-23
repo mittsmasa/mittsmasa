@@ -10,13 +10,13 @@ export function AuthorNote({ name }: Props) {
       className={css({
         display: "flex",
         flexDirection: "column",
-        gap: "6px",
-        paddingTop: { base: "20px", md: "24px" },
-        borderTop: "1px solid token(colors.fg)",
+        gap: "author.gap",
+        paddingTop: "author.top",
+        borderTop: "strong",
       })}
     >
-      <div className={css({ textStyle: "label", color: "fgMuted" })}>書いた人</div>
-      <div className={css({ fontSize: "15px", lineHeight: "24px", fontWeight: 500 })}>{name}</div>
+      <div className={css({ textStyle: "label", color: "fg.muted" })}>書いた人</div>
+      <div className={css({ textStyle: "authorName" })}>{name}</div>
     </div>
   );
 }

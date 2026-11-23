@@ -10,10 +10,9 @@ export function Lead({ children }: Props) {
   return (
     <p
       className={css({
-        margin: 0,
-        fontSize: { base: "14px", md: "15px" },
-        lineHeight: "26px",
-        color: "fgSub",
+        margin: "none",
+        textStyle: "lead",
+        color: "fg.sub",
       })}
     >
       {children}
