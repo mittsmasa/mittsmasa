@@ -18,7 +18,7 @@ const CONTENT_TYPES: Record<string, string> = {
   ".webp": "image/webp",
 };
 
-export type ImageObject = {
+export type ImageUpload = {
   key: string;
   contentType: string;
   markdown: string;
@@ -30,7 +30,7 @@ export function assertSlug(slug: string): void {
   }
 }
 
-export function toImageObject(slug: string, fileName: string, bytes: Uint8Array): ImageObject {
+export function toImageUpload(slug: string, fileName: string, bytes: Uint8Array): ImageUpload {
   assertSlug(slug);
   const extension = extname(fileName).toLowerCase();
   const contentType = CONTENT_TYPES[extension];
@@ -93,7 +93,7 @@ async function main(): Promise<void> {
   const workDir = await mkdtemp(join(tmpdir(), "upload-image-"));
   try {
     const path = file ?? (await readClipboardImage(workDir));
-    const image = toImageObject(slug, path, await readFile(path));
+    const image = toImageUpload(slug, path, await readFile(path));
 
     const wrangler = fileURLToPath(new URL("../node_modules/.bin/wrangler", import.meta.url));
     await run(wrangler, [

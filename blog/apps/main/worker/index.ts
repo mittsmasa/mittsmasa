@@ -1,11 +1,11 @@
-export type ImageObject = {
+export type StoredImage = {
   body: ReadableStream;
   httpEtag: string;
   writeHttpMetadata(headers: Headers): void;
 };
 
 export type ImageBucket = {
-  get(key: string): Promise<ImageObject | null>;
+  get(key: string): Promise<StoredImage | null>;
 };
 
 type AssetsFetcher = {
