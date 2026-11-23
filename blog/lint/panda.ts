@@ -1,12 +1,14 @@
 import { definePlugin, defineRule, type ESTree } from "vite-plus/lint/plugins";
 
 // Panda の生成型は、strictTokens でも次の 3 つの書き方を常に通す（styled-system/types/system.d.ts の WithEscapeHatch）。
-// どれも token を経ずに値を決められるので、css() の値に書けないようにする
+// どれも token を経ずに値を決められるので、css() の値に書けないようにする。
+// 見るのは css() の呼び出しだけ。@blog/ui/jsx の style props や patterns を使い始めたら、そこも足す
 const ESCAPE_HATCHES = [
   { pattern: /^\[[\s\S]*\]$/, name: "[...] の任意の値" },
   { pattern: /!(important)?$/, name: "末尾の ! / !important" },
-  // 型は `${token}/${string}` で、/ の後ろに数字以外（[0.5] など）も通す
-  { pattern: /^[A-Za-z][\w.-]*\/.+$/, name: "token/... の透明度指定" },
+  // 型は `${token}/${string}` で、/ の後ろに数字以外（[0.5] など）も通す。
+  // 色の token はすべて "fg.default" のように . を含む。. の無い "auto/span 2"（grid の値）は拾わない
+  { pattern: /^[A-Za-z][\w-]*\.[\w.-]+\/.+$/, name: "token/... の透明度指定" },
 ];
 
 // 三項演算子や || の枝にある値も、その式全体が置かれた位置で判定する

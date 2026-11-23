@@ -3,7 +3,7 @@ import { defineConfig } from "vite-plus";
 export default defineConfig({
   test: {
     // パッケージごとの vite.config.ts（プラグインを含む）でテストを走らせる
-    projects: ["apps/*", "packages/*"],
+    projects: ["apps/*", "packages/*", "lint"],
   },
   lint: {
     // plugins を書くと Oxlint の既定の一覧を置き換えるので、既定の 4 つを明記する
