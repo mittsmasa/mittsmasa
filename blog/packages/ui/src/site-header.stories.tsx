@@ -1,9 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "storybook/test";
 import { SiteHeader } from "./site-header.tsx";
 
 const meta = {
   component: SiteHeader,
-  args: { siteName: "みつぶろ", topHref: "/", listHref: "/posts/" },
+  args: {
+    siteName: "みつぶろ",
+    topHref: "/",
+    listHref: "/posts/",
+    darkMode: false,
+    onDarkModeChange: fn(),
+  },
 } satisfies Meta<typeof SiteHeader>;
 
 export default meta;
