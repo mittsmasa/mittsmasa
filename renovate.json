@@ -22,9 +22,10 @@
       "automerge": false
     },
     {
-      "description": "storybook-addon-vrt は CLI（npm）と GitHub Action の版をそろえる",
+      "description": "storybook-addon-vrt は CLI（npm）と GitHub Action の版をそろえる。Action は動くタグ v0 を追うので、片方だけ自動で上がらないよう手動マージにする",
       "matchPackageNames": ["storybook-addon-vrt", "k35o/storybook-addon-vrt"],
-      "groupName": "storybook-addon-vrt"
+      "groupName": "storybook-addon-vrt",
+      "automerge": false
     }
   ]
 }

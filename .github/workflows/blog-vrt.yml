@@ -17,6 +17,8 @@ on:
     paths:
       - "blog/packages/ui/**"
       - "blog/pnpm-lock.yaml"
+      - "blog/package.json"
+      - "blog/.node-version"
       - "blog/pnpm-workspace.yaml"
       - ".github/workflows/blog-vrt.yml"
   # main の必須チェックにしないので、paths で絞る
@@ -24,6 +26,8 @@ on:
     paths:
       - "blog/packages/ui/**"
       - "blog/pnpm-lock.yaml"
+      - "blog/package.json"
+      - "blog/.node-version"
       - "blog/pnpm-workspace.yaml"
       - ".github/workflows/blog-vrt.yml"
 
