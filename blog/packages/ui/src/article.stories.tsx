@@ -24,7 +24,7 @@ const html = `
 
 const meta = {
   component: Article,
-  args: { date: "2026-11-18", title: "ブログを作り直しました", html },
+  args: { date: "2026-11-18", title: "ブログを作り直しました", trustedHtml: html },
 } satisfies Meta<typeof Article>;
 
 export default meta;

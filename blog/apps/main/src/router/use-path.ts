@@ -1,6 +1,8 @@
 import {
   addTransitionType,
+  type RefObject,
   useEffect,
+  useEffectEvent,
   useLayoutEffect,
   useRef,
   useState,
@@ -14,10 +16,30 @@ export type RouterState = {
   navigationCount: number;
 };
 
+type PendingNavigation = RefObject<(() => void) | null>;
+
 function canReplace(event: NavigateEvent): boolean {
   return (
     event.canIntercept && !event.hashChange && event.downloadRequest === null && !event.formData
   );
+}
+
+function finish(pendingNavigation: PendingNavigation): void {
+  pendingNavigation.current?.();
+  pendingNavigation.current = null;
+}
+
+function useFinishNavigationBeforeViewTransitionStarts(
+  pendingNavigation: PendingNavigation,
+  committedLocation: unknown,
+): void {
+  useLayoutEffect(() => {
+    finish(pendingNavigation);
+  }, [pendingNavigation, committedLocation]);
+}
+
+function useFinishNavigationOnUnmount(pendingNavigation: PendingNavigation): void {
+  useLayoutEffect(() => () => finish(pendingNavigation), [pendingNavigation]);
 }
 
 export function usePath(
@@ -27,7 +49,9 @@ export function usePath(
 ): RouterState {
   const [location, setLocation] = useState({ path: initialPath, navigationCount: 0 });
   const [pending, startTransition] = useTransition();
-  const finishNavigation = useRef<(() => void) | null>(null);
+  const pendingNavigation = useRef<(() => void) | null>(null);
+  const canHandlePath = useEffectEvent(canHandle);
+  const prepareNavigation = useEffectEvent(onNavigate);
 
   useEffect(() => {
     if (!("navigation" in window)) return;
@@ -35,7 +59,7 @@ export function usePath(
     const onNavigateEvent = (event: NavigateEvent) => {
       if (!canReplace(event)) return;
       const { pathname } = new URL(event.destination.url);
-      if (!event.destination.sameDocument && !canHandle(pathname)) return;
+      if (!event.destination.sameDocument && !canHandlePath(pathname)) return;
       const transitionType = transitionTypeOf({
         navigationType: event.navigationType,
         fromIndex: window.navigation.currentEntry?.index ?? -1,
@@ -44,9 +68,9 @@ export function usePath(
       event.intercept({
         handler: () =>
           new Promise<void>((resolve) => {
-            finishNavigation.current?.();
-            finishNavigation.current = resolve;
-            onNavigate();
+            finish(pendingNavigation);
+            pendingNavigation.current = resolve;
+            prepareNavigation();
             startTransition(() => {
               addTransitionType(transitionType);
               setLocation((current) => ({
@@ -62,20 +86,10 @@ export function usePath(
     return () => {
       window.navigation.removeEventListener("navigate", onNavigateEvent);
     };
-  }, [canHandle, onNavigate, startTransition]);
+  }, [startTransition]);
 
-  useLayoutEffect(() => {
-    finishNavigation.current?.();
-    finishNavigation.current = null;
-  }, [location]);
-
-  useLayoutEffect(
-    () => () => {
-      finishNavigation.current?.();
-      finishNavigation.current = null;
-    },
-    [],
-  );
+  useFinishNavigationBeforeViewTransitionStarts(pendingNavigation, location);
+  useFinishNavigationOnUnmount(pendingNavigation);
 
   return { path: location.path, pending, navigationCount: location.navigationCount };
 }

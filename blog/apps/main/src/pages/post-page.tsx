@@ -21,7 +21,7 @@ export function PostPage({ post, body, newer, older }: Props) {
     <>
       <title>{`${post.title} | ${SITE_NAME}`}</title>
       <main>
-        <Article date={post.date} title={post.title} html={html} />
+        <Article date={post.date} title={post.title} trustedHtml={html} />
       </main>
       <ArticleFooter>
         <AuthorNote name={AUTHOR_NAME} />

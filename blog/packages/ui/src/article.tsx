@@ -5,7 +5,7 @@ import { PageTitle } from "./page-title.tsx";
 type Props = {
   date: string;
   title: string;
-  html: string;
+  trustedHtml: string;
 };
 
 const prose = css({
@@ -60,7 +60,7 @@ const prose = css({
   },
 });
 
-export function Article({ date, title, html }: Props) {
+export function Article({ date, title, trustedHtml }: Props) {
   return (
     <article
       className={css({
@@ -84,7 +84,7 @@ export function Article({ date, title, html }: Props) {
         </time>
         <PageTitle>{title}</PageTitle>
       </div>
-      <div className={prose} dangerouslySetInnerHTML={{ __html: html }} />
+      <div className={prose} dangerouslySetInnerHTML={{ __html: trustedHtml }} />
     </article>
   );
 }
