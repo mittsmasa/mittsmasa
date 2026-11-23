@@ -11,8 +11,20 @@
     },
     {
       "description": "Vite+ は blog/pnpm-workspace.yaml の overrides を vp toolchain の出力に手で合わせる必要があるため、まとめて手動マージにする",
-      "matchPackageNames": ["vite-plus", "@voidzero-dev/**", "vite", "vitest"],
+      "matchPackageNames": ["vite-plus", "@voidzero-dev/**", "vite", "vitest", "@vitest/**"],
       "groupName": "vite-plus",
+      "automerge": false
+    },
+    {
+      "description": "Playwright は npm の版と VRT のコンテナの版をそろえる。Chromium が変わると基準画像を撮り直すことがあるので、手動マージにする",
+      "matchPackageNames": ["playwright", "mcr.microsoft.com/playwright"],
+      "groupName": "playwright",
+      "automerge": false
+    },
+    {
+      "description": "storybook-addon-vrt は CLI（npm）と GitHub Action の版をそろえる。Action は動くタグ v0 を追うので、片方だけ自動で上がらないよう手動マージにする",
+      "matchPackageNames": ["storybook-addon-vrt", "k35o/storybook-addon-vrt"],
+      "groupName": "storybook-addon-vrt",
       "automerge": false
     }
   ]

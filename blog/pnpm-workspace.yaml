@@ -6,9 +6,12 @@ packages:
 minimumReleaseAge: 10080
 
 # install script は名指しで決める。@parcel/watcher は @pandacss/cli の依存。
-# 拒否したままで、ビルドと開発サーバーが動くことを確かめた
+# 拒否したままで、ビルドと開発サーバーが動くことを確かめた。
+# esbuild は storybook の依存。バイナリはプラットフォーム別のパッケージで入り、
+# install script は無くても動く（拒否したままで Storybook の起動とテストを確かめた）
 allowBuilds:
   "@parcel/watcher": false
+  esbuild: false
 
 # Vite+ の指定どおり、vite と vitest を同梱の版に向ける。
 # 版は `pnpm exec vp toolchain vite-plus-core` と `pnpm exec vp toolchain vitest` の出力に合わせる
