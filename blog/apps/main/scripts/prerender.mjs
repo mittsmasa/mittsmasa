@@ -5,8 +5,6 @@ import { pathToFileURL } from "node:url";
 
 const HEAD_PLACEHOLDER = "<!--app-head-->";
 const BODY_PLACEHOLDER = "<!--app-html-->";
-// React は <html> を含まない描画では、<title> を出力の先頭に置く
-const LEADING_TITLE = /^<title>[\s\S]*?<\/title>/;
 
 const dist = join(import.meta.dirname, "..", "dist");
 const clientDir = join(dist, "client");
@@ -24,18 +22,18 @@ for (const placeholder of [HEAD_PLACEHOLDER, BODY_PLACEHOLDER]) {
 }
 
 for (const path of staticPaths) {
-  const html = await renderToHtml(path);
-  const title = LEADING_TITLE.exec(html)?.[0];
-  if (title === undefined) {
-    throw new Error(`${path}: 描画結果の先頭に <title> がありません`);
+  const { head, body } = await renderToHtml(path).catch((error) => {
+    throw new Error(`${path}: 描画できませんでした`, { cause: error });
+  });
+  if (!head.includes("<title>")) {
+    throw new Error(`${path}: <title> がありません`);
   }
-  const body = html.slice(title.length);
 
   const file = join(clientDir, path === "/" ? "" : path.slice(1), "index.html");
   await mkdir(dirname(file), { recursive: true });
   await writeFile(
     file,
-    template.replace(HEAD_PLACEHOLDER, () => title).replace(BODY_PLACEHOLDER, () => body),
+    template.replace(HEAD_PLACEHOLDER, () => head).replace(BODY_PLACEHOLDER, () => body),
   );
   console.log(`prerendered ${path}`);
 }
