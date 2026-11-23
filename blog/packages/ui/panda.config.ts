@@ -60,7 +60,6 @@ export default defineConfig({
         focus: { value: "2px solid {colors.border.strong}" },
       },
       sizes: {
-        full: { value: "100%" },
         // 本文の幅。左右の余白を含む
         content: { value: { base: "640px", md: "688px" } },
         // タップできるリンクの高さ
