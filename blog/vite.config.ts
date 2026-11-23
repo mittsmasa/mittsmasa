@@ -5,7 +5,7 @@ export default defineConfig({
     projects: ["apps/*", "packages/*"],
   },
   lint: {
-    jsPlugins: ["./lint-plugins/no-comments.mjs"],
+    jsPlugins: ["./lint-plugins/no-comments.ts"],
     options: {
       typeAware: true,
       typeCheck: true,

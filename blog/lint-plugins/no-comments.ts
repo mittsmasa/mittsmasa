@@ -1,6 +1,8 @@
+import { definePlugin, defineRule } from "vite-plus/lint/plugins";
+
 const allowed = /^\s*oxlint-(disable|enable)(-next-line|-line)?(\s|$)/;
 
-const noComments = {
+const noComments = defineRule({
   meta: {
     type: "suggestion",
     messages: {
@@ -17,9 +19,9 @@ const noComments = {
       },
     };
   },
-};
+});
 
-export default {
+export default definePlugin({
   meta: { name: "blog" },
   rules: { "no-comments": noComments },
-};
+});

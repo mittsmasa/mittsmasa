@@ -11,4 +11,4 @@
 - oxlint の抑制コメント（`oxlint-disable`、`oxlint-disable-next-line`、`oxlint-disable-line`、`oxlint-enable`）。ルールを抑制するしかない場面に限り、理由はコミットメッセージに書きます
 - GitHub Actions の `uses: owner/action@<sha> # vX.Y.Z` の版注記。Renovate が digest を更新するときに読みます
 
-blog/ 配下の JS / TS は、`vp check` の lint（`blog/lint-plugins/no-comments.mjs`）がコメントを error にします。YAML は lint の対象外なので、この規約だけで守ります。
+blog/ 配下の JS / TS は、`vp check` の lint（`blog/lint-plugins/no-comments.ts`）がコメントを error にします。YAML は lint の対象外なので、この規約だけで守ります。
