@@ -41,7 +41,7 @@ date: 2026-11-23
 fnox -P blog-images --no-defaults exec -- node apps/main/scripts/upload-image.ts <slug> path/to/image.png
 ```
 
-`fnox exec` が keychain から Cloudflare の API トークンを読み、wrangler に環境変数で渡します。準備は「初回の準備」を見てください。
+`fnox exec` がリポジトリ直下の `fnox.toml` から Cloudflare の API トークンを復号し、wrangler に環境変数で渡します。準備は「初回の準備」を見てください。
 
 ## 初回の準備
 
@@ -51,14 +51,15 @@ fnox -P blog-images --no-defaults exec -- node apps/main/scripts/upload-image.ts
    - 権限: アカウント / Workers R2 ストレージ / 編集（Workers R2 Storage: Edit）。ほかの権限は付けません
    - アカウントリソース: このブログのアカウントだけ
    - バケット単位の「Object Read & Write」は S3 互換 API 専用で、wrangler が使う Cloudflare REST API では通りません。そのためアカウント単位の R2 の権限にしています
-2. トークンとアカウント ID を、fnox のプロファイル `blog-images` に keychain で登録します。値はプロンプトで入れます
+2. トークンとアカウント ID を、リポジトリ直下の `fnox.toml` のプロファイル `blog-images` に age で暗号化して書きます。リポジトリ直下で実行し、値はプロンプトで入れます。書き込まれた暗号文はコミットします
 
    ```sh
-   fnox -P blog-images set --global --provider keychain CLOUDFLARE_API_TOKEN
-   fnox -P blog-images set --global --provider keychain CLOUDFLARE_ACCOUNT_ID
+   fnox -P blog-images set --provider age CLOUDFLARE_API_TOKEN
+   fnox -P blog-images set --provider age CLOUDFLARE_ACCOUNT_ID
    ```
 
-   プロファイルを分けるのは、`fnox exec -- pnpm install` などほかのコマンドにトークンを渡さないためです
+   - 復号に使う age の秘密鍵は、macOS の keychain（service `fnox`、account `age-key`）に置きます。暗号化は `fnox.toml` の公開鍵だけで済み、秘密鍵は復号するときに読みます
+   - プロファイルを分けるのは、`fnox exec -- pnpm install` などほかのコマンドにトークンを渡さないためです
 
 3. 以前に `wrangler login` していたら、手元の OAuth トークンを消します: `cd blog/apps/main && vp exec wrangler logout`
 4. バケットを作ります: `cd blog/apps/main && fnox -P blog-images --no-defaults exec -- vp exec wrangler r2 bucket create mittsmasa-blog-images`
