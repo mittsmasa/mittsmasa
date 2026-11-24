@@ -21,17 +21,17 @@ export default defineConfig({
     semanticTokens: {
       colors: {
         bg: {
-          default: { value: "#ffffff" },
-          code: { value: "#f6f6f5" },
+          default: { value: { base: "#ffffff", _dark: "#141414" } },
+          code: { value: { base: "#f6f6f5", _dark: "#1e1e1d" } },
         },
         fg: {
-          default: { value: "#222222" },
-          sub: { value: "#444444" },
-          muted: { value: "#6b6b6b" },
+          default: { value: { base: "#222222", _dark: "#e8e8e6" } },
+          sub: { value: { base: "#444444", _dark: "#c4c4c2" } },
+          muted: { value: { base: "#6b6b6b", _dark: "#9b9b99" } },
         },
         border: {
-          default: { value: "#e5e5e5" },
-          strong: { value: "#222222" },
+          default: { value: { base: "#e5e5e5", _dark: "#2f2f2e" } },
+          strong: { value: { base: "#222222", _dark: "#e8e8e6" } },
         },
       },
       fonts: {
@@ -51,6 +51,7 @@ export default defineConfig({
       sizes: {
         content: { value: { base: "640px", md: "688px" } },
         tapTarget: { value: "44px" },
+        icon: { value: "20px" },
         header: { value: { base: "52px", md: "56px" } },
         dateColumn: {
           full: { value: "88px" },
@@ -116,6 +117,7 @@ export default defineConfig({
         },
         header: {
           gap: { value: "16px" },
+          iconPull: { value: "12px" },
         },
       },
     },
@@ -194,6 +196,7 @@ export default defineConfig({
   },
   globalCss: {
     "*, *::before, *::after": { boxSizing: "border-box" },
+    ".dark": { colorScheme: "dark" },
     body: {
       margin: "none",
       background: "bg.default",
