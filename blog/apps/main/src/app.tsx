@@ -4,7 +4,7 @@ import { LoadErrorPage } from "./pages/load-error-page.tsx";
 import { NotFoundPage } from "./pages/not-found-page.tsx";
 import { forgetFailedPostBodies } from "./posts/index.ts";
 import { usePath } from "./router/index.ts";
-import { isPostListPath, renderPath } from "./routes.tsx";
+import { renderPath } from "./routes.tsx";
 
 type Props = {
   path: string;
@@ -17,7 +17,7 @@ function hasPage(path: string): boolean {
 export function App({ path: initialPath }: Props) {
   const { path, pending, navigationCount } = usePath(initialPath, hasPage, forgetFailedPostBodies);
   return (
-    <Layout listLink={!isPostListPath(path)} pending={pending}>
+    <Layout pending={pending}>
       <ErrorBoundary key={navigationCount} fallback={<LoadErrorPage path={path} />}>
         {renderPath(path) ?? <NotFoundPage />}
       </ErrorBoundary>

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Article } from "./article.tsx";
+import { TextLink } from "./text-link.tsx";
 
 const html = `
 <p>長く使っていたブログの仕組みを、Vite と React で作り直しました。記事は <strong>Markdown のまま</strong>で、ページはビルドのときに HTML に書き出します。</p>
@@ -34,4 +35,8 @@ export const Default: Story = {};
 
 export const DefaultPc: Story = {
   globals: { viewport: { value: "pc", isRotated: false } },
+};
+
+export const WithBackLink: Story = {
+  args: { backLink: <TextLink href="/posts/">一覧にもどる</TextLink> },
 };

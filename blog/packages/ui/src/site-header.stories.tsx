@@ -7,7 +7,6 @@ const meta = {
   args: {
     siteName: "みつぶろ",
     topHref: "/",
-    listHref: "/posts/",
     darkMode: false,
     onDarkModeChange: fn(),
   },
@@ -20,10 +19,6 @@ export const Default: Story = {};
 
 export const DefaultPc: Story = {
   globals: { viewport: { value: "pc", isRotated: false } },
-};
-
-export const WithoutListLink: Story = {
-  args: { listHref: undefined },
 };
 
 export const Loading: Story = {

@@ -21,7 +21,12 @@ export function PostPage({ post, body, newer, older }: Props) {
     <>
       <title>{`${post.title} | ${SITE_NAME}`}</title>
       <main>
-        <Article date={post.date} title={post.title} trustedHtml={html} />
+        <Article
+          date={post.date}
+          title={post.title}
+          trustedHtml={html}
+          backLink={<TextLink href={postListPath}>一覧にもどる</TextLink>}
+        />
       </main>
       <ArticleFooter>
         <AuthorNote name={AUTHOR_NAME} />

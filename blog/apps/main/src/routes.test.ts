@@ -3,7 +3,7 @@ import { PostListPage } from "./pages/post-list-page.tsx";
 import { PostPage } from "./pages/post-page.tsx";
 import { TopPage } from "./pages/top-page.tsx";
 import { postListPath, topPath } from "./paths.ts";
-import { isPostListPath, renderPath, staticPaths } from "./routes.tsx";
+import { renderPath, staticPaths } from "./routes.tsx";
 
 const postPaths = staticPaths.filter((path) => path !== topPath && path !== postListPath);
 
@@ -33,14 +33,5 @@ describe("renderPath", () => {
 
   test("記事が無いパスなら undefined を返す", () => {
     expect(renderPath("/posts/no-such-post/")).toBeUndefined();
-  });
-});
-
-describe("isPostListPath", () => {
-  test("一覧のパスだけ true を返す", () => {
-    expect(isPostListPath("/posts/")).toBe(true);
-    expect(isPostListPath("/posts")).toBe(true);
-    expect(isPostListPath("/")).toBe(false);
-    expect(isPostListPath("/posts/some-post/")).toBe(false);
   });
 });

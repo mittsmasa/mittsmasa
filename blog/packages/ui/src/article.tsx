@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { css } from "../styled-system/css";
 import { formatDate } from "./format-date.ts";
 import { PageTitle } from "./page-title.tsx";
@@ -6,6 +7,7 @@ type Props = {
   date: string;
   title: string;
   trustedHtml: string;
+  backLink?: ReactNode;
 };
 
 const prose = css({
@@ -60,7 +62,7 @@ const prose = css({
   },
 });
 
-export function Article({ date, title, trustedHtml }: Props) {
+export function Article({ date, title, trustedHtml, backLink }: Props) {
   return (
     <article
       className={css({
@@ -79,6 +81,7 @@ export function Article({ date, title, trustedHtml }: Props) {
           marginBottom: "article.headerBottom",
         })}
       >
+        {backLink}
         <time dateTime={date} className={css({ textStyle: "meta", color: "fg.muted" })}>
           {formatDate(date, "full")}
         </time>
