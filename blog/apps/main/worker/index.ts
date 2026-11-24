@@ -8,6 +8,17 @@ export type ImageBucket = {
   get(key: string): Promise<StoredImage | null>;
 };
 
+export type ImageCache = {
+  match(key: string): Promise<Response | undefined>;
+  put(key: string, response: Response): Promise<void>;
+};
+
+export type ImageSource = {
+  bucket: ImageBucket;
+  cache: ImageCache;
+  waitUntil(promise: Promise<unknown>): void;
+};
+
 type AssetsFetcher = {
   fetch(request: Request): Promise<Response>;
 };
@@ -17,11 +28,27 @@ type Env = {
   ASSETS: AssetsFetcher;
 };
 
-const IMAGE_PATH_PREFIX = "/images/";
+type ExecutionContext = {
+  waitUntil(promise: Promise<unknown>): void;
+};
 
-export async function serveImage(request: Request, bucket: ImageBucket): Promise<Response> {
-  const key = new URL(request.url).pathname.slice(IMAGE_PATH_PREFIX.length);
-  const object = key === "" ? null : await bucket.get(key);
+const IMAGE_PATH_PREFIX = "/images/";
+const IMAGE_CACHE_NAME = "images";
+
+export async function serveImage(request: Request, source: ImageSource): Promise<Response> {
+  const url = new URL(request.url);
+  const key = url.pathname.slice(IMAGE_PATH_PREFIX.length);
+  if (key === "") {
+    return new Response("Not Found", { status: 404 });
+  }
+
+  const cacheKey = `${url.origin}${url.pathname}`;
+  const cached = await source.cache.match(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const object = await source.bucket.get(key);
   if (!object) {
     return new Response("Not Found", { status: 404 });
   }
@@ -29,13 +56,19 @@ export async function serveImage(request: Request, bucket: ImageBucket): Promise
   const headers = new Headers();
   object.writeHttpMetadata(headers);
   headers.set("etag", object.httpEtag);
-  return new Response(object.body, { headers });
+  const response = new Response(object.body, { headers });
+  source.waitUntil(source.cache.put(cacheKey, response.clone()));
+  return response;
 }
 
 export default {
-  fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     if (new URL(request.url).pathname.startsWith(IMAGE_PATH_PREFIX)) {
-      return serveImage(request, env.IMAGES);
+      return serveImage(request, {
+        bucket: env.IMAGES,
+        cache: await caches.open(IMAGE_CACHE_NAME),
+        waitUntil: (promise) => ctx.waitUntil(promise),
+      });
     }
     return env.ASSETS.fetch(request);
   },
