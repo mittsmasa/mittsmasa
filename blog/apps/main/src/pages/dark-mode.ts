@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 
-const STORAGE_KEY = "theme";
-const DARK_CLASS = "dark";
+export const THEME_STORAGE_KEY = "theme";
+export const DARK_CLASS = "dark";
 
 const listeners = new Set<() => void>();
 
@@ -19,7 +19,7 @@ function isDarkMode() {
 export function setDarkMode(darkMode: boolean) {
   document.documentElement.classList.toggle(DARK_CLASS, darkMode);
   try {
-    localStorage.setItem(STORAGE_KEY, darkMode ? "dark" : "light");
+    localStorage.setItem(THEME_STORAGE_KEY, darkMode ? "dark" : "light");
   } catch {}
   for (const listener of listeners) listener();
 }

@@ -40,7 +40,9 @@ describe("SiteHeader", () => {
     const light = renderToStaticMarkup(<SiteHeader {...props} />);
     const dark = renderToStaticMarkup(<SiteHeader {...props} darkMode />);
 
-    expect(light).toMatch(/<button type="button" aria-label="ダークモード" aria-pressed="false"/);
-    expect(dark).toMatch(/<button type="button" aria-label="ダークモード" aria-pressed="true"/);
+    const toggle = (html: string) => html.match(/<button[^>]*aria-label="ダークモード"[^>]*>/)?.[0];
+
+    expect(toggle(light)).toContain('aria-pressed="false"');
+    expect(toggle(dark)).toContain('aria-pressed="true"');
   });
 });
