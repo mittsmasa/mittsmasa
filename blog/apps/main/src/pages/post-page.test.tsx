@@ -55,9 +55,16 @@ describe("PostPage", () => {
     expect(html).not.toContain("前の記事");
   });
 
-  test("一覧へ戻れる", async () => {
-    const html = await render(<PostPage post={post("current")} body={Promise.resolve("")} />);
+  test("記事の頭と終わりの両方から、一覧へ戻れる", async () => {
+    const html = await render(
+      <PostPage post={post("current")} body={Promise.resolve("<p>本文です。</p>")} />,
+    );
 
-    expect(linkOf(html, "一覧にもどる")).toContain('href="/posts/"');
+    const backLinks = html.split("<a ").filter((rest) => rest.includes(">一覧にもどる</a>"));
+    expect(backLinks).toHaveLength(2);
+    for (const link of backLinks) expect(link).toContain('href="/posts/"');
+    const body = html.indexOf("<p>本文です。</p>");
+    expect(html.indexOf(">一覧にもどる</a>")).toBeLessThan(body);
+    expect(html.lastIndexOf(">一覧にもどる</a>")).toBeGreaterThan(body);
   });
 });

@@ -3,7 +3,6 @@ import { css } from "../styled-system/css";
 type Props = {
   siteName: string;
   topHref: string;
-  listHref?: string;
   loading?: boolean;
   darkMode: boolean;
   onDarkModeChange: (darkMode: boolean) => void;
@@ -55,7 +54,6 @@ function SunIcon() {
 export function SiteHeader({
   siteName,
   topHref,
-  listHref,
   loading = false,
   darkMode,
   onDarkModeChange,
@@ -94,14 +92,6 @@ export function SiteHeader({
         >
           {loading ? "読み込み中…" : ""}
         </p>
-        {listHref !== undefined && (
-          <a
-            href={listHref}
-            className={`${headerLink} ${css({ paddingLeft: "header.gap", textStyle: "smallLink" })}`}
-          >
-            一覧
-          </a>
-        )}
         <button
           type="button"
           aria-label="ダークモード"

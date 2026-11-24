@@ -43,10 +43,6 @@ export function renderPath(path: string): ReactElement | undefined {
   return matched?.route.render(matched.params);
 }
 
-export function isPostListPath(path: string): boolean {
-  return matchRoute([{ pattern: postListPattern }], path) !== undefined;
-}
-
 export const staticPaths: readonly string[] = [
   topPath,
   postListPath,
