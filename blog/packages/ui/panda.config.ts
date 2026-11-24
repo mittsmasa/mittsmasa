@@ -204,7 +204,7 @@ export default defineConfig({
       fontFamily: "body",
       WebkitFontSmoothing: "antialiased",
     },
-    a: { color: "fg.default" },
+    a: { color: "fg.default", textDecorationSkipInk: "all" },
     "a:hover": { color: "fg.muted" },
     ":focus-visible": { outline: "focus", outlineOffset: "focusOffset" },
   },
