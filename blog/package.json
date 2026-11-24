@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vp run --filter @blog/ui --filter main --parallel dev"
+    "dev": "vp run --filter @blog/ui --filter main --parallel dev",
+    "prepare": "vp config --hooks --no-agent"
   },
   "devDependencies": {
     "vite-plus": "^1.6.0"
