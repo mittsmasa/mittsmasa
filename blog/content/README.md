@@ -72,3 +72,41 @@ fnox -P blog-images --no-defaults exec -- node apps/main/scripts/upload-image.ts
   }
 }
 ```
+
+## Cloudflare に課金されないようにする
+
+Workers を無料プランのまま使い、R2 の保存量を 10 GB 未満に保てば、課金は起きない見込みです。超えたら止まる上限は Cloudflare に無いので、仕組みと運用で無料枠に収めます。
+
+### 課金を止める設定が無い理由
+
+Cloudflare の spending limit（利用額の上限）は、Workers と Durable Objects だけが対象です。R2 は対象外と明記されています。上限は 0 ドルにできず、請求額の上限を保証しないとも書かれています（[Spend management](https://developers.cloudflare.com/billing/manage/spend-management/)）。R2 の Pricing のページにも、無料枠を超えたら止まるという記述はありません（[R2 Pricing](https://developers.cloudflare.com/r2/pricing/)）。
+
+### 無料枠に収まる理由
+
+課金されうるのは R2 だけです。Workers の無料プランは、超えても課金されず、エラーを返します。
+
+- Workers: 無料プランの上限は 1 日 10 万リクエストです。超えると課金ではなく Error 1027 を返します（[Limits](https://developers.cloudflare.com/workers/platform/limits/)）
+- 静的アセット: 記事や CSS へのリクエストは無料で、回数の上限もありません（[Pricing](https://developers.cloudflare.com/workers/platform/pricing/)）
+- R2 の読み出し: 無料枠は月 1000 万回です（Class B 操作）。画像は Worker を通してしか読まず、1 リクエストで 1 回しか読みません。Workers の上限から、読み出しは多くても月 310 万回（10 万回 × 31 日）です
+- R2 の書き込み: 無料枠は月 100 万回です（Class A 操作）。書き込むのは画像のアップロードだけです
+- R2 の保存量: 無料枠は 10 GB です。読み出しと違って Worker では抑えられないので、上げる画像の量で管理します
+
+Worker は、一度 R2 から返した画像を Cache API に置き、次からはキャッシュから返します。読み出しはさらに減ります。キャッシュのキーからはクエリ文字列を外しているので、`?v=1` のようなクエリを付けて R2 を何度も読ませることはできません。一方、存在しないパスは 404 をキャッシュしないので、毎回 R2 を読みます。それでも 1 リクエストで 1 回なので、月 310 万回の上限は変わりません。キャッシュはデータセンターごとで、データセンターごとの初回は R2 を読みます（[Cache API](https://developers.cloudflare.com/workers/runtime-apis/cache/)）。
+
+### この見込みが崩れる条件
+
+次の 3 つのどれかに当たると、R2 の無料枠を超える可能性があります。ダッシュボードで確かめてください。画面の項目名は、ドキュメントでは確かめていません。
+
+1. Workers を有料プランにした。1 日 10 万リクエストの上限が外れ、R2 の読み出しも上限が無くなります。Workers のプランが無料プランのままか確かめます
+2. バケットを r2.dev や custom domain で公開した。Worker を通らずに R2 を読めるようになります。R2 のバケット `mittsmasa-blog-images` の設定で、公開がオフか確かめます
+3. 保存量が 10 GB に近づいた。R2 のバケットの概要で保存量を見ます
+
+`*.workers.dev` で Cache API が効くかは、ドキュメントに書かれておらず未確認です。効かなくても、上の 310 万回の上限は変わりません。
+
+### 超えたときに気づく通知（Budget alert）
+
+念のため、請求額の通知を設定します。アカウント全体の従量課金の額が、決めた金額を超えたらメールが届きます。R2 の利用額もこの合計に入ります。利用は止まりません（[Budget alerts](https://developers.cloudflare.com/billing/manage/budget-alerts/)）。Pay-as-you-go のアカウントだけで使えます。
+
+1. Cloudflare のダッシュボードで「Manage Account」→「Billing」→「Billable Usage」を開きます
+2. 「Create budget alert」を選びます
+3. 金額を 1 ドルにして保存します。少しでも課金されたら届きます
