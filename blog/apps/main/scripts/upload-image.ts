@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -63,13 +63,21 @@ function run(command: string, args: string[], input = ""): Promise<string> {
   });
 }
 
+async function isFile(path: string): Promise<boolean> {
+  return stat(path).then(
+    (stats) => stats.isFile(),
+    () => false,
+  );
+}
+
 async function readClipboardImage(workDir: string): Promise<string> {
   const copiedFile = await run("osascript", [
     "-e",
     "POSIX path of (the clipboard as «class furl»)",
   ]).catch(() => undefined);
-  if (copiedFile) {
-    return copiedFile.trim();
+  const copiedPath = copiedFile?.trim();
+  if (copiedPath && (await isFile(copiedPath))) {
+    return copiedPath;
   }
 
   const pasted = join(workDir, "clipboard.png");
