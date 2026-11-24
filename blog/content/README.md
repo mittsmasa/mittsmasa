@@ -59,6 +59,8 @@ fnox -P blog-images --no-defaults exec -- node apps/main/scripts/upload-image.ts
    ```
 
    - 復号に使う age の秘密鍵は、macOS の keychain（service `fnox`、account `age-key`）に置きます。暗号化は `fnox.toml` の公開鍵だけで済み、秘密鍵は復号するときに読みます
+   - 新しい端末では、既存の秘密鍵（`AGE-SECRET-KEY-` で始まる 1 行）を `security add-generic-password -s fnox -a age-key -w` で keychain に登録します。値はプロンプトで入れます
+   - 秘密鍵を失くしたら、`age-keygen` で鍵を作り直し、`fnox.toml` の `recipients` を新しい公開鍵に差し替えます。そのうえで Cloudflare のトークンを作り直し、2 つの値を set し直します
    - プロファイルを分けるのは、`fnox exec -- pnpm install` などほかのコマンドにトークンを渡さないためです
 
 3. 以前に `wrangler login` していたら、手元の OAuth トークンを消します: `cd blog/apps/main && vp exec wrangler logout`
