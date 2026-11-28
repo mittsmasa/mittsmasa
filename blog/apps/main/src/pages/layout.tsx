@@ -24,16 +24,18 @@ export function Layout({ pending, children }: Props) {
         darkMode={darkMode}
         onDarkModeChange={setDarkMode}
       />
-      <ViewTransition>
-        <Suspense
-          fallback={
-            <PageMain>
-              <Lead>読み込み中…</Lead>
-            </PageMain>
-          }
-        >
-          {children}
-        </Suspense>
+      <ViewTransition default="page">
+        <div data-navigation-pending={pending ? "" : undefined}>
+          <Suspense
+            fallback={
+              <PageMain>
+                <Lead>読み込み中…</Lead>
+              </PageMain>
+            }
+          >
+            {children}
+          </Suspense>
+        </div>
       </ViewTransition>
     </>
   );
