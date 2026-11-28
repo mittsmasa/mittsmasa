@@ -8,7 +8,7 @@ import {
   useState,
   useTransition,
 } from "react";
-import { transitionTypeOf } from "./transition-type.ts";
+import { transitionTypeOf, UA_VISUAL_TRANSITION_TYPE } from "./transition-type.ts";
 
 export type RouterState = {
   path: string;
@@ -65,6 +65,7 @@ export function usePath(
         fromIndex: window.navigation.currentEntry?.index ?? -1,
         toIndex: event.destination.index,
       });
+      const { hasUAVisualTransition } = event;
       event.intercept({
         handler: () =>
           new Promise<void>((resolve) => {
@@ -73,6 +74,7 @@ export function usePath(
             prepareNavigation();
             startTransition(() => {
               addTransitionType(transitionType);
+              if (hasUAVisualTransition) addTransitionType(UA_VISUAL_TRANSITION_TYPE);
               setLocation((current) => ({
                 path: pathname,
                 navigationCount: current.navigationCount + 1,

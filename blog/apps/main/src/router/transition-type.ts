@@ -5,6 +5,8 @@ export type NavigationTransitionType =
   | "navigation-back"
   | "navigation-forward";
 
+export const UA_VISUAL_TRANSITION_TYPE = "navigation-ua-visual";
+
 type Navigation = {
   navigationType: NavigationType;
   fromIndex: number;
